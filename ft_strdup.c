@@ -1,46 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/22 19:30:00 by wburgos          ###   ########.fr       */
+/*   Created: 2014/11/06 18:36:52 by wburgos           #+#    #+#             */
+/*   Updated: 2014/11/06 18:51:41 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdarg.h>
+#include <stdlib.h>
 #include "libft.h"
 
-int		ft_printf(char *arg, ...)
+char	*ft_strdup(const char *src)
 {
-	int		i;
-	va_list	ap;
-	char	*str;
+	char	*dst;
+	int		len;
 
-	va_start(ap, arg);
-	i = 0;
-	while (*arg)
-	{
-		if (*arg != '%')
-			ft_putchar(*arg);
-		else
-		{
-			arg++;
-			if (!*arg)
-				break ;
-			if (*arg == 's')
-			{
-				str = ft_strdup(va_arg(ap, char *));
-				ft_putstr(str);
-				i += ft_strlen(str) - 1;
-				arg++;
-			}
-		}
-		i++;
-		arg++;
-	}
-	return (i);
+	len = ft_strlen(src) + 1;
+	dst = (char*)malloc(sizeof(char) * len);
+	if (dst)
+		ft_strcpy(dst, src);
+	return (dst);
 }

@@ -1,46 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/22 19:30:00 by wburgos          ###   ########.fr       */
+/*   Created: 2014/11/08 17:13:13 by wburgos           #+#    #+#             */
+/*   Updated: 2014/11/08 17:13:54 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdarg.h>
 #include "libft.h"
 
-int		ft_printf(char *arg, ...)
+void	ft_putstr(char const *s)
 {
-	int		i;
-	va_list	ap;
-	char	*str;
-
-	va_start(ap, arg);
-	i = 0;
-	while (*arg)
-	{
-		if (*arg != '%')
-			ft_putchar(*arg);
-		else
-		{
-			arg++;
-			if (!*arg)
-				break ;
-			if (*arg == 's')
-			{
-				str = ft_strdup(va_arg(ap, char *));
-				ft_putstr(str);
-				i += ft_strlen(str) - 1;
-				arg++;
-			}
-		}
-		i++;
-		arg++;
-	}
-	return (i);
+	write(1, s, ft_strlen(s));
 }

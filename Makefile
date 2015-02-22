@@ -11,7 +11,9 @@
 #******************************************************************************#
 
 NAME = libftprintf.a
-SRCS = 	ft_printf.c
+SRC = src/
+SRCS = 	ft_printf.c ft_putchar.c ft_putstr.c ft_strlen.c ft_strdup.c \
+		ft_strcpy.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 
