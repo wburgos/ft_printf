@@ -1,2 +1,3 @@
-ft_printf
-*~
+*.a
+printf
+main.c
