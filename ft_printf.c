@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/26 12:29:07 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/26 13:09:15 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int		ft_printf(char *fmt, ...)
 {
 	int		i;
 	va_list	ap;
-	char	*symbols;
-	char	*opts;
+	// char	*symbols;
+	int		*opts;
 
-	symbols = init_symbols(symbols);
+	// symbols = init_symbols(symbols);
 	va_start(ap, fmt);
 	i = 0;
 	while (*fmt)
@@ -79,8 +79,8 @@ int		ft_printf(char *fmt, ...)
 		}
 		else
 		{
-			opts = parse_opts(opts, symbols);
-			i = convert(fmt, opts, i);
+			opts = parse_opts(fmt);
+			// i = convert(fmt, opts, i);
 		}
 		fmt++;
 	}
