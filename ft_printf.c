@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/27 22:57:16 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 00:04:35 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,9 @@ int		ft_printf(char *fmt, ...)
 		else
 		{
 			fmt++;
-			if (*fmt == '%')
-			{
-				ft_putchar(*fmt);
-				fmt++;
-				i++;
-				continue ;
-			}
 			opts = parse_opts(&fmt, &min_width, &precision, &conv_i);
+			if (conv_i == -1)
+				continue ;
 		}
 		fmt++;
 	}

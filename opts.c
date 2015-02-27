@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/27 23:28:34 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 00:05:44 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,14 +154,8 @@ int		read_converter(char *fmt, int *opts)
 	i = 0;
 	conv = init_conv();
 	corres = init_corres();
-	while (!*fmt && !i)
-	{
-		i = ft_inarray(*fmt, conv);
-		fmt++;
-	}
-	if (!*fmt)
-		return (0);
-	*opts |= corres[i];
+	if ((i = ft_inarray(*fmt, conv)) != -1)
+		*opts |= corres[i];
 	return (i);
 }
 
@@ -176,6 +170,7 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
 	{
 		ft_putchar('%');
 		(*fmt)++;
+		return (-1);
 	}
 	while (read_flags(**fmt, &opts))
 		(*fmt)++;
@@ -192,5 +187,6 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
 	if ((fwd = read_modifiers(*fmt, &opts)))
 		(*fmt) += fwd;
 	*conv_i = read_converter(*fmt, &opts);
+	*(fmt)++;
 	return (opts);
 }
