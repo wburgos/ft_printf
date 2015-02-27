@@ -1,17 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opts.c                                             :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/27 21:43:35 by wburgos          ###   ########.fr       */
+/*   Created: 2015/02/27 17:55:38 by wburgos           #+#    #+#             */
+/*   Updated: 2015/02/27 17:56:22 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdlib.h>
-#include "ft_printf.h"
 
 int		read_flags(char c, int *opts)
 {
@@ -86,108 +83,4 @@ int		read_modifiers(char *fmt, int *opts)
 	if (nb_l == 2 || nb_l >= 3)
 		*opts |= LL;
 	return (i);
-}
-
-char	*init_conv(void)
-{
-	char	*conv;
-
-	conv = malloc(sizeof(*conv) * 14);
-	conv[0] = 's';
-	conv[1] = 'S';
-	conv[2] = 'p';
-	conv[3] = 'd';
-	conv[4] = 'D';
-	conv[5] = 'i';
-	conv[6] = 'o';
-	conv[7] = 'O';
-	conv[8] = 'u';
-	conv[9] = 'U';
-	conv[10] = 'x';
-	conv[11] = 'X';
-	conv[12] = 'c';
-	conv[13] = 'C';
-	return (conv);
-}
-
-int		*init_corres(void)
-{
-	int		*corres;
-
-	corres = malloc(sizeof(*corres) * 14);
-	corres[0] = S;
-	corres[1] = BIG_S;
-	corres[2] = P;
-	corres[3] = D;
-	corres[4] = BIG_D;
-	corres[5] = I;
-	corres[6] = O;
-	corres[7] = BIG_O;
-	corres[8] = U;
-	corres[9] = BIG_U;
-	corres[10] = X;
-	corres[11] = BIG_X;
-	corres[12] = C;
-	corres[13] = BIG_C;
-	return (corres);
-}
-
-int		ft_inarray(char c, char *arr)
-{
-	int		i;
-
-	i = 0;
-	while (arr[i] && c != arr[i])
-		i++;
-	if (c == arr[i])
-		return (i);
-	return (-1);
-}
-
-int		read_converter(char *fmt, int *opts)
-{
-	char	*conv;
-	int		*corres;
-	int		i;
-
-	i = 0;
-	conv = init_conv();
-	corres = init_corres();
-	while (!*fmt && !(i = ft_inarray(*fmt, conv)))
-		fmt++;
-	if (!*fmt)
-		return (0);
-	*opts |= corres[i];
-	return (i);
-}
-
-int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
-{
-	int		fwd;
-	int		opts;
-
-	fwd = 0;
-	opts = 0;
-	while (**fmt)
-	{
-		if (**fmt == '%')
-			ft_putchar();
-		while (read_flags(**fmt, &opts))
-			*fmt++;
-		if ((fwd = read_min_width(*fmt, min_width)))
-		{
-			opts |= MIN_WIDTH;
-			*fmt += fwd;
-		}
-		if ((fwd = read_precision(*fmt, precision)))
-		{
-			opts |= PRECISION;
-			*fmt += fwd;
-		}
-		if ((fwd = read_modifiers(*fmt, &opts)))
-			*fmt += fwd;
-		*conv_i = read_converter(*fmt, &opts);
-		*fmt++;
-	}
-	return (opts);
 }

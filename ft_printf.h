@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/26 13:45:53 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/27 19:15:13 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define MIN_WIDTH	33554432
 # define PRECISION	67108864
 
-char	*init_symbols(char *symbols);
+int		ft_inarray(char c, char *arr);
+char	*init_conv(void);
+int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i);
 
 #endif

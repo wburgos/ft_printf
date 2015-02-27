@@ -12,8 +12,9 @@
 
 NAME = libftprintf.a
 SRC = src/
-SRCS = 	ft_printf.c ft_putchar.c ft_putstr.c ft_strlen.c ft_strdup.c \
-		ft_strcpy.c
+SRCS = 	ft_printf.c ft_memalloc.c ft_memset.c ft_printf.c ft_putchar.c \
+		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c \
+		ft_strsub.c ft_atoi.c ft_isdigit.c opts.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 
@@ -21,7 +22,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "Compiling printf ..."
-	@gcc -c $(SRCS) -I$(INC)
+	@gcc -g3 -c $(SRCS) -I$(INC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 	@echo "Done"

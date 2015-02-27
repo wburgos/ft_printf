@@ -6,84 +6,61 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/26 13:09:15 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/27 19:38:29 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdarg.h>
 #include "libft.h"
 #include "ft_printf.h"
 
-// int		set_opts(char *format, t_opts *opts, int i)
-// {
-// 	if (format[i] == '#')
-// 	{
-// 		opts->diese = 1;
-// 		i++;
-// 	}
-// 	if (format[i] == '0')
-// 	{
-// 		opts->zero = 1;
-// 		i++;
-// 	}
-// 	if (format[i] == '-')
-// 	{
-// 		opts->minus = 1;
-// 		i++;
-// 	}
-// 	if (format[i] == ' ')
-// 	{
-// 		opts->space = 1;
-// 		i++;
-// 	}
-// 	if (format[i] == '+')
-// 	{
-// 		opts->plus = 1;
-// 		i++;
-// 	}
-// 	return (i);
-// }
+int		check_converter(char *fmt)
+{
+	char	*conv;
+	int		found;
 
-// void	get_opts(char *format, t_opts *opts)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	init_opts(opts);
-// 	while (format[i])
-// 	{
-// 		set_opts
-// 		i++;
-// 	}
-// }
+	found = 0;
+	conv = init_conv();
+	while (*fmt)
+	{
+		if (ft_inarray(*fmt, conv))
+			found = 1;
+		fmt++;
+	}
+	return (found);
+}
 
 int		ft_printf(char *fmt, ...)
 {
 	int		i;
 	va_list	ap;
-	// char	*symbols;
-	int		*opts;
+	int		opts;
+	int		min_width;
+	int		precision;
+	int		conv_i;
 
-	// symbols = init_symbols(symbols);
 	va_start(ap, fmt);
 	i = 0;
 	while (*fmt)
 	{
-		if (*fmt != '%')
+		if (*fmt != '%' || (*fmt == '%' && !check_converter(fmt)))
 		{
 			ft_putchar(*fmt);
 			i++;
 		}
 		else
 		{
-			opts = parse_opts(fmt);
-			// i = convert(fmt, opts, i);
+			fmt++;
+			if (*fmt == '%')
+			{
+				ft_putchar(*fmt);
+				fmt++;
+				i++;
+				continue ;
+			}
+			opts = parse_opts(&fmt, &min_width, &precision, &conv_i);
 		}
 		fmt++;
 	}
-	free(symbols);
 	return (i);
 }
