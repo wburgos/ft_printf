@@ -6,12 +6,13 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/27 21:43:35 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/27 23:28:34 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
+#include "libft.h"
 
 int		read_flags(char c, int *opts)
 {
@@ -153,8 +154,11 @@ int		read_converter(char *fmt, int *opts)
 	i = 0;
 	conv = init_conv();
 	corres = init_corres();
-	while (!*fmt && !(i = ft_inarray(*fmt, conv)))
+	while (!*fmt && !i)
+	{
+		i = ft_inarray(*fmt, conv);
 		fmt++;
+	}
 	if (!*fmt)
 		return (0);
 	*opts |= corres[i];
@@ -168,26 +172,25 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
 
 	fwd = 0;
 	opts = 0;
-	while (**fmt)
+	if (**fmt == '%')
 	{
-		if (**fmt == '%')
-			ft_putchar();
-		while (read_flags(**fmt, &opts))
-			*fmt++;
-		if ((fwd = read_min_width(*fmt, min_width)))
-		{
-			opts |= MIN_WIDTH;
-			*fmt += fwd;
-		}
-		if ((fwd = read_precision(*fmt, precision)))
-		{
-			opts |= PRECISION;
-			*fmt += fwd;
-		}
-		if ((fwd = read_modifiers(*fmt, &opts)))
-			*fmt += fwd;
-		*conv_i = read_converter(*fmt, &opts);
-		*fmt++;
+		ft_putchar('%');
+		(*fmt)++;
 	}
+	while (read_flags(**fmt, &opts))
+		(*fmt)++;
+	if ((fwd = read_min_width(*fmt, min_width)))
+	{
+		opts |= MIN_WIDTH;
+		(*fmt) += fwd;
+	}
+	if ((fwd = read_precision(*fmt, precision)))
+	{
+		opts |= PRECISION;
+		(*fmt) += fwd;
+	}
+	if ((fwd = read_modifiers(*fmt, &opts)))
+		(*fmt) += fwd;
+	*conv_i = read_converter(*fmt, &opts);
 	return (opts);
 }
