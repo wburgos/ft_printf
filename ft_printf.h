@@ -6,12 +6,16 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/27 19:15:13 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 00:39:42 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
+#include <stdarg.h>
+
+typedef void (*fprint)(va_list, int);
 
 # define DIESE		1
 # define ZERO		2
@@ -43,6 +47,6 @@
 
 int		ft_inarray(char c, char *arr);
 char	*init_conv(void);
-int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i);
+int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *conv);
 
 #endif

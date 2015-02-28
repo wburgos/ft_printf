@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 00:05:44 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 00:16:45 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,21 +145,19 @@ int		ft_inarray(char c, char *arr)
 	return (-1);
 }
 
-int		read_converter(char *fmt, int *opts)
+int		read_converter(char *fmt, int *opts, char *conv)
 {
-	char	*conv;
 	int		*corres;
 	int		i;
 
 	i = 0;
-	conv = init_conv();
 	corres = init_corres();
 	if ((i = ft_inarray(*fmt, conv)) != -1)
 		*opts |= corres[i];
 	return (i);
 }
 
-int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
+int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *conv)
 {
 	int		fwd;
 	int		opts;
@@ -186,7 +184,7 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
 	}
 	if ((fwd = read_modifiers(*fmt, &opts)))
 		(*fmt) += fwd;
-	*conv_i = read_converter(*fmt, &opts);
+	*conv_i = read_converter(*fmt, &opts, conv);
 	*(fmt)++;
 	return (opts);
 }
