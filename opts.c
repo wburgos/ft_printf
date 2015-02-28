@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 00:16:45 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 13:47:15 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,21 @@ char	*init_conv(void)
 {
 	char	*conv;
 
-	conv = malloc(sizeof(*conv) * 14);
-	conv[0] = 's';
-	conv[1] = 'S';
-	conv[2] = 'p';
-	conv[3] = 'd';
-	conv[4] = 'D';
-	conv[5] = 'i';
-	conv[6] = 'o';
-	conv[7] = 'O';
-	conv[8] = 'u';
-	conv[9] = 'U';
-	conv[10] = 'x';
-	conv[11] = 'X';
-	conv[12] = 'c';
-	conv[13] = 'C';
+	conv = malloc(sizeof(*conv) * C_SIZE);
+	conv[I_S] = 's';
+	conv[I_BIGS] = 'S';
+	conv[I_P] = 'p';
+	conv[I_D] = 'd';
+	conv[I_BIGD] = 'D';
+	conv[I_I] = 'i';
+	conv[I_O] = 'o';
+	conv[I_BIGO] = 'O';
+	conv[I_U] = 'u';
+	conv[I_BIGU] = 'U';
+	conv[I_X] = 'x';
+	conv[I_BIGX] = 'X';
+	conv[I_C] = 'c';
+	conv[I_BIGC] = 'C';
 	return (conv);
 }
 
@@ -115,21 +115,21 @@ int		*init_corres(void)
 {
 	int		*corres;
 
-	corres = malloc(sizeof(*corres) * 14);
-	corres[0] = S;
-	corres[1] = BIG_S;
-	corres[2] = P;
-	corres[3] = D;
-	corres[4] = BIG_D;
-	corres[5] = I;
-	corres[6] = O;
-	corres[7] = BIG_O;
-	corres[8] = U;
-	corres[9] = BIG_U;
-	corres[10] = X;
-	corres[11] = BIG_X;
-	corres[12] = C;
-	corres[13] = BIG_C;
+	corres = malloc(sizeof(*corres) * C_SIZE);
+	corres[I_S] = S;
+	corres[I_BIGS] = BIG_S;
+	corres[I_P] = P;
+	corres[I_D] = D;
+	corres[I_BIGD] = BIG_D;
+	corres[I_I] = I;
+	corres[I_O] = O;
+	corres[I_BIGO] = BIG_O;
+	corres[I_U] = U;
+	corres[I_BIGU] = BIG_U;
+	corres[I_X] = X;
+	corres[I_BIGX] = BIG_X;
+	corres[I_C] = C;
+	corres[I_BIGC] = BIG_C;
 	return (corres);
 }
 

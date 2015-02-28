@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 00:39:42 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 12:35:39 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdarg.h>
 
-typedef void (*fprint)(va_list, int);
+typedef int (*fprint)(va_list, int);
 
 # define DIESE		1
 # define ZERO		2
@@ -44,6 +44,22 @@ typedef void (*fprint)(va_list, int);
 # define Z			16777216
 # define MIN_WIDTH	33554432
 # define PRECISION	67108864
+
+# define C_SIZE		14
+# define I_S		0
+# define I_BIGS		1
+# define I_P		2
+# define I_D		3
+# define I_BIGD		4
+# define I_I		5
+# define I_O		6
+# define I_BIGO		7
+# define I_U		8
+# define I_BIGU		9
+# define I_X		10
+# define I_BIGX		11
+# define I_C		12
+# define I_BIGC		13
 
 int		ft_inarray(char c, char *arr);
 char	*init_conv(void);

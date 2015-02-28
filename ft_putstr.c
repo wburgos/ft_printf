@@ -6,14 +6,18 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/08 17:13:13 by wburgos           #+#    #+#             */
-/*   Updated: 2014/11/08 17:13:54 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/02/28 09:56:39 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int		ft_putstr(char const *s)
 {
-	write(1, s, ft_strlen(s));
+	int		len;
+
+	len = ft_strlen(s);
+	write(1, s, len);
+	return (len);
 }

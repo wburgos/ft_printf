@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/08 17:18:59 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 13:14:35 by wburgos          ###   ########.fr       */
+/*   Created: 2014/11/04 15:38:47 by wburgos           #+#    #+#             */
+/*   Updated: 2014/11/04 16:51:55 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
-void	ft_putunbr(size_t n)
+void ft_bzero(void *s, size_t n)
 {
-	if (n > 10)
-	{
-		ft_putunbr(n / 10);
-		ft_putunbr(n % 10);
-	}
-	else
-		ft_putchar(n + '0');
-}
+	t_byte	*str;
 
-void	ft_putnbr(int n)
-{
-	ft_putstr(ft_itoa(n));
+	str = (t_byte*)s;
+	while (n > 0)
+	{
+		*str = 0;
+		str++;
+		n--;
+	}
 }
