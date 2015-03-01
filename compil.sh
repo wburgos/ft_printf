@@ -1,3 +1,4 @@
+clear
 make re
-gcc -g3 main.c -lftprintf -lefence -L. -I. -Iincludes/
+gcc -Wall -Wextra -Werror -g3 main.c -lftprintf -lefence -L. -I. -Iincludes/
 ./a.out

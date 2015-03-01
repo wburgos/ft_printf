@@ -36,7 +36,7 @@ int		read_precision(char *fmt, int *precision)
 	int		i;
 
 	i = 0;
-	if (fmt[i] != '.' || (fmt[i] == '.' && !ft_isdigit(fmt[i + 1])))
+	if (fmt[i] != '.')
 		return (0);
 	i++;
 	while (ft_isdigit(fmt[i]))
@@ -185,6 +185,5 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *c
 	if ((fwd = read_modifiers(*fmt, &opts)))
 		(*fmt) += fwd;
 	*conv_i = read_converter(*fmt, &opts, conv);
-	*(fmt)++;
 	return (opts);
 }

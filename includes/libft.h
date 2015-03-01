@@ -13,6 +13,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <wchar.h>
 
 typedef	unsigned char	t_byte;
 

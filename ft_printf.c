@@ -13,8 +13,35 @@
 #include <stdio.h>
 #include <wchar.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "libft.h"
 #include "ft_printf.h"
+
+wchar_t	*ft_wcsncpy(wchar_t *dst, const wchar_t *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != L'\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dst[i] = L'\0';
+		i++;
+	}
+	return (dst);
+}
+
+wchar_t	*ft_wcsnew(size_t size)
+{
+	wchar_t	*str;
+
+	str = ft_memalloc(sizeof(wchar_t) * size + sizeof(wchar_t));
+	return (str);
+}
 
 int		ft_nbdigits(int n)
 {
@@ -45,12 +72,17 @@ int		check_converter(char *fmt, char *conv)
 
 int		ft_wcslen(wchar_t *str)
 {
-	wchar_t	*tmp;
+	size_t	i;
 
-	tmp = str;
-	while (*tmp)
-		tmp++;
-	return ((char *)tmp - (char *)str);
+	i = 0;
+	while (str[i] != L'\0')
+		i++;
+	return (i);
+}
+
+void	ft_putwchar(wchar_t c)
+{
+	write(1, &c, 1);
 }
 
 int		ft_putwstr(wchar_t *str)
@@ -58,25 +90,64 @@ int		ft_putwstr(wchar_t *str)
 	int		len;
 
 	len = ft_wcslen(str);
-	write(1, str, len);
+	write(1, str, len * sizeof(wchar_t));
 	return (len);
 }
 
-int		print_str(va_list ap, int opts)
+int		putspaces(int min_width, int len, int opts)
+{
+	while ((min_width - len) > 0)
+	{
+		ft_putchar(((opts & ZERO) && !(opts & MINUS)) ? '0' : ' ');
+		len++;
+	}
+	return (len);
+}
+
+int		print_wstr(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
+	wchar_t	*str;
+	wchar_t	*cpy;
 
-	len = 0;
-	if ((opts & S) && !(opts & L))
-		len = ft_putstr(va_arg(ap, char *));
-	if (opts & BIG_S || ((opts & S) && (opts & L)))
-		len = ft_putwstr(va_arg(ap, wchar_t *));
+	str = va_arg(ap, wchar_t *);
+	if (opts & PRECISION)
+	{
+		cpy = ft_wcsnew(precision);
+		cpy = ft_wcsncpy(cpy, str, precision);
+		str = cpy;
+	}
+	len = ft_wcslen(str);
+	if (!(opts & MINUS))
+		len = putspaces(min_width, len, opts);
+	ft_putwstr(str);
+	if (opts & MINUS)
+		len = putspaces(min_width, len, opts);
 	return (len);
 }
 
-int		print_addr(va_list ap, int opts)
+int		print_str(va_list ap, int opts, int min_width, int precision)
 {
-	ft_putstr(va_arg(ap, char *));
+	int		len;
+	char	*str;
+	char	*cpy;
+
+	if (opts & L)
+		return (print_wstr(ap, opts, min_width, precision));
+	str = va_arg(ap, char *);
+	if (opts & PRECISION)
+	{
+		cpy = ft_strnew(precision);
+		cpy = ft_strncpy(cpy, str, precision);
+		str = cpy;
+	}
+	len = ft_strlen(str);
+	if (!(opts & MINUS))
+		len = putspaces(min_width, len, opts);
+	ft_putstr(str);
+	if (opts & MINUS)
+		len = putspaces(min_width, len, opts);
+	return (len);
 }
 
 int		ft_uinttooct(unsigned int n)
@@ -172,7 +243,7 @@ char	*ft_strtolower(char *str)
 	return (str);
 }
 
-int		print_hex(va_list ap, int opts)
+int		print_hex(va_list ap, int opts, int min_width, int precision)
 {
 	void	*n;
 	int		len;
@@ -189,7 +260,7 @@ int		print_hex(va_list ap, int opts)
 	return (len);
 }
 
-int		print_oct(va_list ap, int opts)
+int		print_oct(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
 
@@ -206,17 +277,19 @@ int		print_oct(va_list ap, int opts)
 	return (len);
 }
 
-int		print_nbr(va_list ap, int opts)
+int		print_nbr(va_list ap, int opts, int min_width, int precision)
 {
 	if (opts & D || opts & I)
 		ft_putnbr(va_arg(ap, int));
 	if (opts & U)
 		ft_putunbr(va_arg(ap, unsigned int));
+	return (0);
 }
 
-int		print_char(va_list ap, int opts)
+int		print_char(va_list ap, int opts, int min_width, int precision)
 {
-	ft_putnbr(va_arg(ap, int));
+	ft_putchar(va_arg(ap, int));
+	return (1);
 }
 
 fprint	*init_ftab()
@@ -225,7 +298,7 @@ fprint	*init_ftab()
 
 	ftab = malloc(sizeof(*ftab) * C_SIZE);
 	ftab[I_S] = print_str;
-	ftab[I_BIGS] = print_str;
+	ftab[I_BIGS] = print_wstr;
 	ftab[I_P] = print_hex;
 	ftab[I_D] = print_nbr;
 	ftab[I_BIGD] = print_nbr;
@@ -239,6 +312,14 @@ fprint	*init_ftab()
 	ftab[I_C] = print_char;
 	ftab[I_BIGC] = print_char;
 	return (ftab);
+}
+
+void	init_val(int *opts, int *min_width, int *precision, int *conv_i)
+{
+	*opts = 0;
+	*min_width = 0;
+	*precision = 0;
+	*conv_i = 0;
 }
 
 int		ft_printf(char *fmt, ...)
@@ -256,6 +337,7 @@ int		ft_printf(char *fmt, ...)
 	conv = init_conv();
 	ftab = init_ftab();
 	i = 0;
+	init_val(&opts, &min_width, &precision, &conv_i);
 	while (*fmt)
 	{
 		if (*fmt != '%' || (*fmt == '%' && !check_converter(fmt, conv)))
@@ -269,9 +351,11 @@ int		ft_printf(char *fmt, ...)
 			opts = parse_opts(&fmt, &min_width, &precision, &conv_i, conv);
 			if (conv_i == -1)
 				continue ;
-			i += ftab[conv_i](ap, opts);
+			i += ftab[conv_i](ap, opts, min_width, precision);
 		}
 		fmt++;
 	}
+	free(conv);
+	free(ftab);
 	return (i);
 }

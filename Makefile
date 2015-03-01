@@ -15,7 +15,7 @@ SRC = src/
 SRCS = 	ft_printf.c ft_memalloc.c ft_memset.c ft_printf.c ft_putchar.c \
 		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c \
 		ft_strsub.c ft_atoi.c ft_isdigit.c ft_putnbr.c ft_itoa.c \
-		ft_bzero.c opts.c
+		ft_bzero.c ft_strncpy.c opts.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 

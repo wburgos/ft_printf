@@ -15,7 +15,7 @@
 
 #include <stdarg.h>
 
-typedef int (*fprint)(va_list, int);
+typedef int (*fprint)(va_list, int, int, int);
 
 # define DIESE		1
 # define ZERO		2
