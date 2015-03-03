@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 15:11:25 by wburgos           #+#    #+#             */
-/*   Updated: 2014/11/04 15:48:19 by wburgos          ###   ########.fr       */
+/*   Created: 2015/03/03 17:20:57 by wburgos           #+#    #+#             */
+/*   Updated: 2015/03/03 17:28:56 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+char	*ft_utoa(uintmax_t n)
 {
-	t_byte	*str;
+	char	*str;
+	int		sign;
+	size_t	i;
 
-	str = (t_byte*)s;
-	while (n-- > 0)
-		*str++ = (t_byte)c;
-	return (s);
+	str = ft_strnew(11);
+	i = 0;
+	if (n != 0)
+	{
+		sign = n < 0 ? -1 : 1;
+		while (n != 0)
+		{
+			str[i++] = (n % (10 * sign)) * sign + '0';
+			n /= 10;
+		}
+		if (sign < 0)
+			str[i++] = '-';
+		str[i] = '\0';
+		str = ft_strrev(str);
+	}
+	else
+		str[i++] = '0';
+	str[i] = '\0';
+	return (str);
 }

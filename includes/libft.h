@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 15:51:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 13:14:57 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 17:27:06 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <string.h>
 # include <wchar.h>
+# include <stdint.h>
 
 typedef	unsigned char	t_byte;
 
@@ -67,16 +68,17 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
-char				*ft_itoa(int n);
+char				*ft_itoa(intmax_t n);
+char				*ft_utoa(uintmax_t n);
 void				ft_putchar(char c);
 int					ft_putstr(char const *s);
 void				ft_putendl(char const *s);
-int					ft_putnbr(int n);
-int					ft_putunbr(size_t n);
+int					ft_putnbr(intmax_t n);
+int					ft_putunbr(uintmax_t n);
+void				ft_putnbr_fd(intmax_t n, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
@@ -85,10 +87,8 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_sign(int n);
 float				ft_abs(float n);
-int					ft_nbdigits(int n);
+int					ft_nbdigits(intmax_t n);
+int					ft_unbdigits(uintmax_t n);
 char				*ft_strrev(char *str);
 void				ft_swap(char *a, char *b);
-char				*ft_ltoa(long n);
-int					ft_putunbr(size_t n);
-int		ft_nbdigits(int n);
 #endif

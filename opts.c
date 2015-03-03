@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 13:47:15 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 18:35:54 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,37 @@ int		read_min_width(char *fmt, int *min_width)
 
 int		read_modifiers(char *fmt, int *opts)
 {
-	int		nb_h;
-	int		nb_l;
 	int		i;
 
-	nb_l = 0;
-	nb_h = 0;
 	i = 0;
 	while (fmt[i] == 'h' || fmt[i] == 'l' || fmt[i] == 'j' || fmt[i] == 'z')
 	{
 		if (fmt[i] == 'h')
-			nb_h++;
+		{
+			if (fmt[i + 1] == 'h')
+			{
+				*opts |= HH;
+				i++;
+			}
+			else
+				*opts |= H;
+		}
 		if (fmt[i] == 'l')
-			nb_l++;
+		{
+			if (fmt[i + 1] == 'l')
+			{
+				*opts |= LL;
+				i++;
+			}
+			else
+				*opts |= L;
+		}
 		if (fmt[i] == 'j')
 			*opts |= J;
 		if (fmt[i] == 'z')
 			*opts |= Z;
 		i++;
 	}
-	if (nb_h == 1 || nb_h >= 3)
-		*opts |= H;
-	if (nb_h == 2 || nb_h >= 3)
-		*opts |= HH;
-	if (nb_l == 1 || nb_l >= 3)
-		*opts |= L;
-	if (nb_l == 2 || nb_l >= 3)
-		*opts |= LL;
 	return (i);
 }
 
@@ -93,7 +97,7 @@ char	*init_conv(void)
 {
 	char	*conv;
 
-	conv = malloc(sizeof(*conv) * C_SIZE);
+	conv = ft_strnew(C_SIZE);
 	conv[I_S] = 's';
 	conv[I_BIGS] = 'S';
 	conv[I_P] = 'p';
@@ -115,7 +119,7 @@ int		*init_corres(void)
 {
 	int		*corres;
 
-	corres = malloc(sizeof(*corres) * C_SIZE);
+	corres = ft_memalloc(sizeof(*corres) * C_SIZE);
 	corres[I_S] = S;
 	corres[I_BIGS] = BIG_S;
 	corres[I_P] = P;

@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev.c                                        :+:      :+:    :+:   */
+/*   ft_unbdigits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/03 19:41:24 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 19:41:25 by wburgos          ###   ########.fr       */
+/*   Created: 2015/03/03 17:00:30 by wburgos           #+#    #+#             */
+/*   Updated: 2015/03/03 17:30:24 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdint.h>
 
-char		*ft_strrev(char *str)
+int		ft_unbdigits(uintmax_t n)
 {
-	char	*end;
-	char	*tmp;
-	int		len;
+	int		i;
 
-	if (str)
+	if (n == 0)
+		return (1);
+	i = n < 0 ? 1 : 0;
+	while (n != 0)
 	{
-		tmp = str;
-		len = ft_strlen(str);
-		end = str + len - 1;
-		while (tmp < end)
-			ft_swap(tmp++, end--);
+		n /= 10;
+		i++;
 	}
-	return (str);
+	return (i);
 }

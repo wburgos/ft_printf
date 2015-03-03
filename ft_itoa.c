@@ -6,13 +6,13 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/08 15:40:49 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 12:33:26 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 17:29:06 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char			*ft_itoa(int n)
+char	*ft_itoa(intmax_t n)
 {
 	char	*str;
 	int		sign;

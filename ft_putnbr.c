@@ -6,13 +6,13 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/08 17:18:59 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 13:14:35 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 17:28:05 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_putnbr(int n)
+int		ft_putnbr(intmax_t n)
 {
 	ft_putstr(ft_itoa(n));
 	return (ft_nbdigits(n));
