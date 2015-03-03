@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/02/28 12:35:39 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 20:50:15 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdarg.h>
 
-typedef int (*fprint)(va_list, int, int, int);
+typedef int 		(*fprint)(va_list, int, int, int);
 
 # define DIESE		1
 # define ZERO		2

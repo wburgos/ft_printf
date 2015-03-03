@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 19:45:08 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 22:42:58 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,8 @@ int		ft_putoctal(uintmax_t n)
 {
 	uintmax_t	rem;
 	uintmax_t	i;
-	int			len;
-	char		*res;
+	int		len;
+	char	*res;
 
 	res = ft_strnew(50);
 	if (res)
@@ -230,16 +230,14 @@ int		ft_dectohex(uintmax_t n, char *res, int opts, int precision, int min_width)
 	int		i;
 	char	*hex;
 
-	len = 0;
 	i = 0;
 	hex = ft_strnew(16);
 	ft_strcpy(hex, "0123456789ABCDEF");
-	*res = '0';
-	if (n == 0)
-		len++;
+	res[0] = '0';
+	len = (n == 0) ? 1 : 0;
 	while (n != 0)
 	{
-		(res)[len] = hex[n & 0xF];
+		res[len] = hex[n & 0xF];
 		len++;
 		n >>= 4;
 	}
@@ -280,11 +278,11 @@ char	*ft_strtolower(char *str)
 int		print_hex(va_list ap, int opts, int min_width, int precision)
 {
 	int			len;
-	char		*hex;
+	char		hex[50];
 	uintmax_t	n;
 
+	ft_bzero(hex, 50);
 	n = (uintmax_t)(va_arg(ap, void *));
-	hex = ft_strnew(ft_unbdigits(n) + precision + min_width);
 	len = ft_dectohex(n, hex, opts, precision, min_width);
 	if (opts & X || opts & P)
 		ft_putstr(ft_strtolower(hex));
@@ -298,7 +296,6 @@ int		print_hex(va_list ap, int opts, int min_width, int precision)
 			len++;
 		}
 	}
-	free(hex);
 	return (len);
 }
 
@@ -312,10 +309,19 @@ int		print_oct(va_list ap, int opts, int min_width, int precision)
 		ft_putchar('0');
 		len++;
 	}
-	if (opts & O && !(opts & L))
-		len = ft_putoctal(va_arg(ap, int));
-	if ((opts & BIG_O) || (opts & O && opts & L))
-		len = ft_putoctal(va_arg(ap, long));
+	len = ft_putoctal(va_arg(ap, int));
+	return (len);
+}
+
+int		print_llnbr(va_list ap, int opts, int min_width, int precision)
+{
+	int		len;
+
+	len = 0;
+	if (opts & D || opts & I || opts & BIG_D)
+		len = ft_putnbr(va_arg(ap, long long));
+	if (opts & U || opts & BIG_U)
+		len = ft_putunbr(va_arg(ap, unsigned long long));
 	return (len);
 }
 
@@ -323,9 +329,10 @@ int		print_lnbr(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
 
-	if (opts & BIG_D || opts & D || opts & I)
+	len = 0;
+	if (opts & D || opts & I || opts & BIG_D)
 		len = ft_putnbr(va_arg(ap, long));
-	if (opts & BIG_U || opts & U)
+	if (opts & U || opts & BIG_U)
 		len = ft_putunbr(va_arg(ap, unsigned long));
 	return (len);
 }
@@ -337,6 +344,8 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 	len = 0;
 	if (opts & L)
 		return (print_lnbr(ap, opts, min_width, precision));
+	if (opts & LL)
+		return (print_llnbr(ap, opts, min_width, precision));
 	if (opts & D || opts & I)
 		len = ft_putnbr(va_arg(ap, int));
 	if (opts & U)
@@ -354,6 +363,8 @@ int		print_wchar(va_list ap, int opts, int min_width, int precision)
 
 int		print_char(va_list ap, int opts, int min_width, int precision)
 {
+	if (opts & L)
+		return (print_wchar(ap, opts, min_width, precision));
 	ft_putchar(va_arg(ap, int));
 	return (sizeof(char));
 }

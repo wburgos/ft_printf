@@ -6,19 +6,17 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/03 17:00:30 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 17:30:24 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 22:14:09 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
+#include "libft.h"
 
 int		ft_unbdigits(uintmax_t n)
 {
 	int		i;
 
-	if (n == 0)
-		return (1);
-	i = n < 0 ? 1 : 0;
+	i = (n == 0) ? 1 : 0;
 	while (n != 0)
 	{
 		n /= 10;

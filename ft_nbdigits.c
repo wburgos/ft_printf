@@ -6,11 +6,11 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/03 16:57:34 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 17:30:14 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/03 22:14:07 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
+#include "libft.h"
 
 int		ft_nbdigits(intmax_t n)
 {
