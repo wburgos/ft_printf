@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/09/01 16:34:57 by wburgos           #+#    #+#             */
-/*   Updated: 2014/11/06 18:25:50 by wburgos          ###   ########.fr       */
+/*   Created: 2014/11/04 21:54:52 by wburgos           #+#    #+#             */
+/*   Updated: 2014/11/06 19:56:23 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-
-size_t	ft_strlen(const char *s)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	size_t	i;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (s[i] != '\0')
+	j = 0;
+	while (s1[i])
 		i++;
-	return (i);
+	while (s2[j])
+		s1[i++] = s2[j++];
+	s1[i] = '\0';
+	return (s1);
 }

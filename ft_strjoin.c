@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/09/01 16:34:57 by wburgos           #+#    #+#             */
-/*   Updated: 2014/11/06 18:25:50 by wburgos          ###   ########.fr       */
+/*   Created: 2014/11/08 15:16:58 by wburgos           #+#    #+#             */
+/*   Updated: 2014/11/08 15:16:58 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include <stdlib.h>
+#include "libft.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
+	char	*c;
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	c = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
+	ft_strcpy(c, s1);
+	ft_strcat(c, s2);
+	return (c);
 }

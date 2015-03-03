@@ -45,6 +45,15 @@ typedef int (*fprint)(va_list, int, int, int);
 # define MIN_WIDTH	33554432
 # define PRECISION	67108864
 
+# define diese(x)	(x & DIESE)
+# define zero(x)	(x & ZERO)
+# define minus(x)	(x & MINUS)
+# define p(x)		(x & P)
+# define minw(x)	(x & MIN_WIDTH)
+# define prec(x)	(x & PRECISION)
+
+# define mlen(x, y)	((p(x) || diese(x)) ? (y + 2) : (y))
+
 # define C_SIZE		14
 # define I_S		0
 # define I_BIGS		1

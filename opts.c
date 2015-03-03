@@ -152,6 +152,8 @@ int		read_converter(char *fmt, int *opts, char *conv)
 
 	i = 0;
 	corres = init_corres();
+	if (*fmt == '%')
+		return (-1);
 	if ((i = ft_inarray(*fmt, conv)) != -1)
 		*opts |= corres[i];
 	return (i);
@@ -164,12 +166,6 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *c
 
 	fwd = 0;
 	opts = 0;
-	if (**fmt == '%')
-	{
-		ft_putchar('%');
-		(*fmt)++;
-		return (-1);
-	}
 	while (read_flags(**fmt, &opts))
 		(*fmt)++;
 	if ((fwd = read_min_width(*fmt, min_width)))

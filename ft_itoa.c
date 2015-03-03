@@ -12,35 +12,6 @@
 
 #include "libft.h"
 
-static void		ft_swap(char *a, char *b)
-{
-	char	tmp;
-
-	if (a && b)
-	{
-		tmp = *a;
-		*a = *b;
-		*b = tmp;
-	}
-}
-
-static char		*ft_strrev(char *str)
-{
-	char	*end;
-	char	*tmp;
-	int		len;
-
-	if (str)
-	{
-		tmp = str;
-		len = ft_strlen(str);
-		end = str + len - 1;
-		while (tmp < end)
-			ft_swap(tmp++, end--);
-	}
-	return (str);
-}
-
 char			*ft_itoa(int n)
 {
 	char	*str;
