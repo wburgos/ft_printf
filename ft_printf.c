@@ -309,31 +309,16 @@ int		print_oct(va_list ap, int opts, int min_width, int precision)
 		ft_putchar('0');
 		len++;
 	}
-	len = ft_putoctal(va_arg(ap, int));
-	return (len);
-}
-
-int		print_llnbr(va_list ap, int opts, int min_width, int precision)
-{
-	int		len;
-
-	len = 0;
-	if (opts & D || opts & I || opts & BIG_D)
-		len = ft_putnbr(va_arg(ap, long long));
-	if (opts & U || opts & BIG_U)
-		len = ft_putunbr(va_arg(ap, unsigned long long));
-	return (len);
-}
-
-int		print_lnbr(va_list ap, int opts, int min_width, int precision)
-{
-	int		len;
-
-	len = 0;
-	if (opts & D || opts & I || opts & BIG_D)
-		len = ft_putnbr(va_arg(ap, long));
-	if (opts & U || opts & BIG_U)
-		len = ft_putunbr(va_arg(ap, unsigned long));
+	if (opts & L || opts & BIG_O)
+		len = ft_putoctal(va_arg(ap, unsigned long));
+	else if (opts & LL)
+		len = ft_putoctal(va_arg(ap, unsigned long long));
+	else if (opts & HH)
+		len = ft_putoctal((unsigned char)va_arg(ap, unsigned int));
+	else if (opts & H)
+		len = ft_putoctal((unsigned short)va_arg(ap, unsigned int));
+	else
+		len = ft_putoctal(va_arg(ap, unsigned int));
 	return (len);
 }
 
@@ -342,14 +327,32 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 	int		len;
 
 	len = 0;
-	if (opts & L)
-		return (print_lnbr(ap, opts, min_width, precision));
-	if (opts & LL)
-		return (print_llnbr(ap, opts, min_width, precision));
-	if (opts & D || opts & I)
-		len = ft_putnbr(va_arg(ap, int));
-	if (opts & U)
-		len = ft_putunbr(va_arg(ap, unsigned int));
+	if (opts & D || opts & I || opts & BIG_D)
+	{
+		if (opts & LL)
+			len = ft_putnbr(va_arg(ap, long long));
+		else if (opts & L || opts & BIG_D)
+			len = ft_putnbr(va_arg(ap, long));
+		else if (opts & HH)
+			len = ft_putnbr((char)va_arg(ap, int));
+		else if (opts & H)
+			len = ft_putnbr((short)va_arg(ap, int));
+		else
+			len = ft_putnbr(va_arg(ap, int));
+	}
+	if (opts & U || opts & BIG_U)
+	{
+		if (opts & LL)
+			len = ft_putunbr(va_arg(ap, unsigned long long));
+		else if (opts & L || opts & BIG_U)
+			len = ft_putunbr(va_arg(ap, unsigned long));
+		else if (opts & HH)
+			len = ft_putnbr((unsigned char)va_arg(ap, unsigned int));
+		else if (opts & H)
+			len = ft_putnbr((unsigned short)va_arg(ap, unsigned int));
+		else
+			len = ft_putunbr(va_arg(ap, unsigned int));
+	}
 	return (len);
 }
 
@@ -378,12 +381,12 @@ fprint	*init_ftab()
 	ftab[I_BIGS] = print_wstr;
 	ftab[I_P] = print_hex;
 	ftab[I_D] = print_nbr;
-	ftab[I_BIGD] = print_lnbr;
+	ftab[I_BIGD] = print_nbr;
 	ftab[I_I] = print_nbr;
 	ftab[I_O] = print_oct;
 	ftab[I_BIGO] = print_oct;
 	ftab[I_U] = print_nbr;
-	ftab[I_BIGU] = print_lnbr;
+	ftab[I_BIGU] = print_nbr;
 	ftab[I_X] = print_hex;
 	ftab[I_BIGX] = print_hex;
 	ftab[I_C] = print_char;
