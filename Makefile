@@ -6,17 +6,17 @@
 #    By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/04 14:13:14 by wburgos           #+#    #+#              #
-#    Updated: 2015/03/03 21:14:00 by wburgos          ###   ########.fr        #
+#    Updated: 2015/03/04 14:46:30 by wburgos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = libftprintf.a
 SRC = src/
 SRCS = 	ft_printf.c opts.c ft_memalloc.c ft_bzero.c ft_printf.c ft_putchar.c \
-		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c \
-		ft_strsub.c ft_atoi.c ft_isdigit.c ft_putnbr.c ft_itoa.c ft_strcat.c \
-		ft_strncpy.c ft_strrev.c ft_swap.c ft_utoa.c ft_strjoin.c ft_putunbr.c \
-		ft_nbdigits.c ft_unbdigits.c
+		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c ft_utoa.c \
+		ft_strsub.c ft_atoi.c ft_isdigit.c ft_itoa.c ft_strcat.c ft_swap.c \
+		ft_strncpy.c ft_strrev.c ft_strjoin.c ft_putunbr.c ft_nbdigits.c \
+		ft_unbdigits.c ft_formatnbr.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 

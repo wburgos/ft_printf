@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 20:50:15 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/04 18:18:59 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 
 #include <stdarg.h>
+#include <stdint.h>
 
 typedef int 		(*fprint)(va_list, int, int, int);
 
@@ -73,5 +74,6 @@ typedef int 		(*fprint)(va_list, int, int, int);
 int		ft_inarray(char c, char *arr);
 char	*init_conv(void);
 int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *conv);
+int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
 
 #endif

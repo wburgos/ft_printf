@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 22:42:58 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/04 18:14:11 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int		print_str(va_list ap, int opts, int min_width, int precision)
 	return (len);
 }
 
-int		ft_putoctal(uintmax_t n)
+int		ft_putoctal(uintmax_t n, int opts)
 {
 	uintmax_t	rem;
 	uintmax_t	i;
@@ -218,6 +218,8 @@ int		ft_putoctal(uintmax_t n)
 			res[len] = rem + '0';
 			len++;
 		}
+		if (opts & DIESE)
+			res[len++] = '0';
 		ft_putstr(ft_strrev(res));
 		free(res);
 	}
@@ -282,7 +284,12 @@ int		print_hex(va_list ap, int opts, int min_width, int precision)
 	uintmax_t	n;
 
 	ft_bzero(hex, 50);
-	n = (uintmax_t)(va_arg(ap, void *));
+	if (opts & HH)
+		n = (unsigned char)(va_arg(ap, unsigned int));
+	else if (opts & H)
+		n = (unsigned short)(va_arg(ap, unsigned int));
+	else
+		n = (uintmax_t)(va_arg(ap, void *));
 	len = ft_dectohex(n, hex, opts, precision, min_width);
 	if (opts & X || opts & P)
 		ft_putstr(ft_strtolower(hex));
@@ -303,22 +310,20 @@ int		print_oct(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
 
-	len = 0;
-	if (opts & DIESE)
-	{
-		ft_putchar('0');
-		len++;
-	}
 	if (opts & L || opts & BIG_O)
-		len = ft_putoctal(va_arg(ap, unsigned long));
+		len = ft_putoctal(va_arg(ap, unsigned long), opts);
 	else if (opts & LL)
-		len = ft_putoctal(va_arg(ap, unsigned long long));
+		len = ft_putoctal(va_arg(ap, unsigned long long), opts);
 	else if (opts & HH)
-		len = ft_putoctal((unsigned char)va_arg(ap, unsigned int));
+		len = ft_putoctal((unsigned char)va_arg(ap, unsigned int), opts);
 	else if (opts & H)
-		len = ft_putoctal((unsigned short)va_arg(ap, unsigned int));
+		len = ft_putoctal((unsigned short)va_arg(ap, unsigned int), opts);
+	else if (opts & J)
+		len = ft_putoctal(va_arg(ap, uintmax_t), opts);
+	else if (opts & Z)
+		len = ft_putoctal(va_arg(ap, size_t), opts);
 	else
-		len = ft_putoctal(va_arg(ap, unsigned int));
+		len = ft_putoctal(va_arg(ap, unsigned int), opts);
 	return (len);
 }
 
@@ -330,28 +335,34 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 	if (opts & D || opts & I || opts & BIG_D)
 	{
 		if (opts & LL)
-			len = ft_putnbr(va_arg(ap, long long));
+			len = ft_formatnbr(va_arg(ap, long long), opts, min_width, precision);
 		else if (opts & L || opts & BIG_D)
-			len = ft_putnbr(va_arg(ap, long));
+			len = ft_formatnbr(va_arg(ap, long), opts, min_width, precision);
 		else if (opts & HH)
-			len = ft_putnbr((char)va_arg(ap, int));
+			len = ft_formatnbr((char)va_arg(ap, int), opts, min_width, precision);
 		else if (opts & H)
-			len = ft_putnbr((short)va_arg(ap, int));
+			len = ft_formatnbr((short)va_arg(ap, int), opts, min_width, precision);
+		else if (opts & J || opts & Z)
+			len = ft_formatnbr(va_arg(ap, intmax_t), opts, min_width, precision);
 		else
-			len = ft_putnbr(va_arg(ap, int));
+			len = ft_formatnbr(va_arg(ap, int), opts, min_width, precision);
 	}
 	if (opts & U || opts & BIG_U)
 	{
 		if (opts & LL)
-			len = ft_putunbr(va_arg(ap, unsigned long long));
+			len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision);
 		else if (opts & L || opts & BIG_U)
-			len = ft_putunbr(va_arg(ap, unsigned long));
+			len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision);
 		else if (opts & HH)
-			len = ft_putnbr((unsigned char)va_arg(ap, unsigned int));
+			len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision);
 		else if (opts & H)
-			len = ft_putnbr((unsigned short)va_arg(ap, unsigned int));
+			len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision);
+		else if (opts & J)
+			len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision);
+		else if (opts & Z)
+			len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision);
 		else
-			len = ft_putunbr(va_arg(ap, unsigned int));
+			len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision);
 	}
 	return (len);
 }
@@ -405,6 +416,28 @@ int		check_next_pct(char *fmt)
 		return (i + 1);
 	return (0);
 }
+
+// int		opspaces(int opts, int min_width, int len)
+// {
+// 	if (!(opts & ZERO) && (!(opts & S) || !(opts & PRECISION)))
+// 	while ((min_width - len) > 0)
+// 	{
+// 		ft_putchar(((opts & ZERO) && !(opts & MINUS)) ? '0' : ' ');
+// 		len++;
+// 	}
+// 	return (len);
+// }
+
+// int		print(int opts, int min_width, int precision, int conv_i)
+// {
+// 	if (!(opts & S))
+// 	{
+// 		opspaces(opts, min_width, precision);
+// 	// putsign();
+// 	// print();
+// 	// endspaces();
+// 	}
+// }
 
 int		ft_printf(char *fmt, ...)
 {
