@@ -75,5 +75,6 @@ int		ft_inarray(char c, char *arr);
 char	*init_conv(void);
 int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *conv);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
+int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec);
 
 #endif

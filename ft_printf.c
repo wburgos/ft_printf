@@ -417,28 +417,6 @@ int		check_next_pct(char *fmt)
 	return (0);
 }
 
-// int		opspaces(int opts, int min_width, int len)
-// {
-// 	if (!(opts & ZERO) && (!(opts & S) || !(opts & PRECISION)))
-// 	while ((min_width - len) > 0)
-// 	{
-// 		ft_putchar(((opts & ZERO) && !(opts & MINUS)) ? '0' : ' ');
-// 		len++;
-// 	}
-// 	return (len);
-// }
-
-// int		print(int opts, int min_width, int precision, int conv_i)
-// {
-// 	if (!(opts & S))
-// 	{
-// 		opspaces(opts, min_width, precision);
-// 	// putsign();
-// 	// print();
-// 	// endspaces();
-// 	}
-// }
-
 int		ft_printf(char *fmt, ...)
 {
 	int		i;
