@@ -34,7 +34,10 @@ static int	put_zeroes(int minw, int prec, int len, int opts)
 	int		i;
 
 	i = 0;
-	ref = (opts & ZERO && minw > prec) ? minw : prec;
+	if (opts & minw && opts & ZERO && !(opts & PRECISION))
+		ref = minw;
+	else
+		ref = prec;
 	while (ref > len++)
 	{
 		ft_putchar('0');
@@ -89,7 +92,7 @@ int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 
 	len = ft_nbdigits(n);
 	tmp = len;
-	if (!(opts & MINUS) && !(opts & ZERO))
+	if (!(opts & MINUS) && (!(opts & ZERO) || opts & PRECISION))
 		len += put_spaces(minw, prec, tmp);
 	len += put_sign(n, opts, &tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)

@@ -138,6 +138,19 @@ int		ft_putwstr(wchar_t *str)
 	return (len);
 }
 
+int		putwspaces(int min_width, int len, int opts)
+{
+	wchar_t	wc;
+
+	while ((min_width - len) > 0)
+	{
+		wc = ((opts & ZERO) && !(opts & MINUS)) ? L'0' : L' ';
+		ft_putwchar(wc);
+		len += ft_wclen(wc);
+	}
+	return (len);
+}
+
 int		putspaces(int min_width, int len, int opts)
 {
 	while ((min_width - len) > 0)
@@ -202,10 +215,12 @@ int		ft_putoctal(uintmax_t n, int opts)
 {
 	uintmax_t	rem;
 	uintmax_t	i;
-	int		len;
-	char	*res;
+	int			len;
+	char		*res;
+	uintmax_t	tn;
 
 	res = ft_strnew(50);
+	tn = n;
 	if (res)
 	{
 		i = 1;
@@ -218,7 +233,7 @@ int		ft_putoctal(uintmax_t n, int opts)
 			res[len] = rem + '0';
 			len++;
 		}
-		if (opts & DIESE)
+		if (opts & DIESE && tn != 0)
 			res[len++] = '0';
 		ft_putstr(ft_strrev(res));
 		free(res);
@@ -228,14 +243,16 @@ int		ft_putoctal(uintmax_t n, int opts)
 
 int		ft_dectohex(uintmax_t n, char *res, int opts, int precision, int min_width)
 {
-	int		len;
-	int		i;
-	char	*hex;
+	int			len;
+	int			i;
+	char		*hex;
+	uintmax_t	tn;
 
 	i = 0;
 	hex = ft_strnew(16);
 	ft_strcpy(hex, "0123456789ABCDEF");
 	res[0] = '0';
+	tn = n;
 	len = (n == 0) ? 1 : 0;
 	while (n != 0)
 	{
@@ -245,9 +262,9 @@ int		ft_dectohex(uintmax_t n, char *res, int opts, int precision, int min_width)
 	}
 	while (precision > len || (min_width > mlen(opts, len) && zero(opts) && !minus(opts) && !prec(opts)))
 		res[len++] = '0';
-	if (p(opts) || diese(opts))
+	if (p(opts) || (diese(opts) && tn != 0))
 	{
-		res[len++] = 'x';
+		res[len++] = 'X';
 		res[len++] = '0';
 	}
 	while (min_width > len && ((!zero(opts) || prec(opts)) && !minus(opts)))
@@ -370,17 +387,52 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 int		print_wchar(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
+	wchar_t	c;
 
-	len = ft_putwchar(va_arg(ap, wint_t));
+	c = va_arg(ap, wint_t);
+	if (opts & PRECISION && precision == 0)
+		c = L'\0';
+	len = ft_wclen(c);
+	if (!(opts & MINUS))
+		len = putwspaces(min_width, len, opts);
+	ft_putwchar(c);
+	if (opts & MINUS)
+		len = putwspaces(min_width, len, opts);
+	return (len);
+}
+
+int		print_badchar(char c, int opts, int min_width, int precision)
+{
+	int		len;
+
+	if (opts & PRECISION && precision == 0)
+		c = 0;
+	len = sizeof(char);
+	if (!(opts & MINUS))
+		len = putspaces(min_width, len, opts);
+	ft_putchar(c);
+	if (opts & MINUS)
+		len = putspaces(min_width, len, opts);
 	return (len);
 }
 
 int		print_char(va_list ap, int opts, int min_width, int precision)
 {
+	int		len;
+	char	c;
+
 	if (opts & L)
 		return (print_wchar(ap, opts, min_width, precision));
-	ft_putchar(va_arg(ap, int));
-	return (sizeof(char));
+	c = va_arg(ap, int);
+	if (opts & PRECISION && precision == 0)
+		c = 0;
+	len = sizeof(char);
+	if (!(opts & MINUS))
+		len = putspaces(min_width, len, opts);
+	ft_putchar(c);
+	if (opts & MINUS)
+		len = putspaces(min_width, len, opts);
+	return (len);
 }
 
 fprint	*init_ftab()
@@ -458,8 +510,9 @@ int		ft_printf(char *fmt, ...)
 			}
 			opts = parse_opts(&fmt, &min_width, &precision, &conv_i, conv);
 			if (conv_i == -1)
-				continue ;
-			i += ftab[conv_i](ap, opts, min_width, precision);
+				i += print_badchar(*fmt, opts, min_width, precision) ;
+			else
+				i += ftab[conv_i](ap, opts, min_width, precision);
 		}
 		fmt++;
 	}
