@@ -34,7 +34,7 @@ static int	put_zeroes(int minw, int prec, int len, int opts)
 	int		i;
 
 	i = 0;
-	if (opts & minw && opts & ZERO && !(opts & PRECISION))
+	if (opts & MIN_WIDTH && opts & ZERO && !(opts & PRECISION))
 		ref = minw;
 	else
 		ref = prec;
@@ -79,7 +79,10 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec)
 		len += put_spaces(minw, prec, tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts);
-	ft_putunbr(n);
+	if (opts & PRECISION && prec == 0)
+		len--;
+	else
+		ft_putunbr(n);
 	if (opts & MINUS)
 		len += put_spaces(minw, prec, tmp);
 	return (len);
@@ -92,12 +95,17 @@ int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 
 	len = ft_nbdigits(n);
 	tmp = len;
+	if (n < 0)
+		prec++;
 	if (!(opts & MINUS) && (!(opts & ZERO) || opts & PRECISION))
 		len += put_spaces(minw, prec, tmp);
 	len += put_sign(n, opts, &tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts);
-	ft_putunbr((n < 0) ? (-n) : (n));
+	if (opts & PRECISION && prec == 0)
+		len--;
+	else
+		ft_putunbr((n < 0) ? (-n) : (n));
 	if (opts & MINUS)
 		len += put_spaces(minw, prec, tmp);
 	return (len);
