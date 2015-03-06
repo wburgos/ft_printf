@@ -74,7 +74,7 @@ void				ft_putchar(char c);
 int					ft_putstr(char const *s);
 void				ft_putendl(char const *s);
 int					ft_putnbr(intmax_t n);
-int					ft_putunbr(uintmax_t n);
+void				ft_putunbr(uintmax_t n);
 void				ft_putnbr_fd(intmax_t n, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
@@ -88,7 +88,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_sign(int n);
 float				ft_abs(float n);
 int					ft_nbdigits(intmax_t n);
-int					ft_unbdigits(uintmax_t n);
 char				*ft_strrev(char *str);
 void				ft_swap(char *a, char *b);
+void				ft_strtolower(char *str);
 #endif

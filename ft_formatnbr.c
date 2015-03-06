@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
 
@@ -68,21 +69,52 @@ static int put_sign(intmax_t n, int opts, int *tmp)
 	return (1);
 }
 
-int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec)
+static int put_prefix(uintmax_t n, int opts)
+{
+	int		len;
+
+	len = 0;
+	if ((opts & O || opts & BIG_O) && opts & DIESE && n != 0)
+	{
+		ft_putchar('0');
+		len = 1;
+	}
+	else if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
+	{
+		ft_putchar('0');
+		if (opts & P || opts & X)
+			ft_putchar('x');
+		else
+			ft_putchar('X');
+		len = 2;
+	}
+	return (len);
+}
+
+int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(uintmax_t, int *))
 {
 	int		len;
 	int		tmp;
+	char	*res;
 
-	len = ft_unbdigits(n);
+	res = convert(n, &len);
+	if ((opts & O || opts & BIG_O) && opts & DIESE && n != 0)
+		len++;
+	else if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
+		len += 2;
+	if (opts & X || opts & P)
+		ft_strtolower(res);
 	tmp = len;
 	if (!(opts & MINUS) && !(opts & ZERO))
 		len += put_spaces(minw, prec, tmp);
+	tmp += put_prefix(n, opts);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts);
-	if (opts & PRECISION && prec == 0)
+	if (opts & PRECISION && prec == 0 && n == 0)
 		len--;
 	else
-		ft_putunbr(n);
+		ft_putstr(res);
+	free(res);
 	if (opts & MINUS)
 		len += put_spaces(minw, prec, tmp);
 	return (len);
@@ -102,7 +134,7 @@ int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 	len += put_sign(n, opts, &tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts);
-	if (opts & PRECISION && prec == 0)
+	if (opts & PRECISION && prec == 0 && n == 0)
 		len--;
 	else
 		ft_putunbr((n < 0) ? (-n) : (n));

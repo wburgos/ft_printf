@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_putunbr(uintmax_t n)
+void	ft_putunbr(uintmax_t n)
 {
 	if (n >= 10)
 	{
@@ -21,5 +21,4 @@ int		ft_putunbr(uintmax_t n)
 	}
 	else
 		ft_putchar(n + '0');
-	return (ft_unbdigits(n));
 }
