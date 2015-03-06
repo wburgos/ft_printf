@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/04 18:14:11 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 17:12:27 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ int		ft_wcutf8(wchar_t wchar, char *conv_temp)
 wchar_t	*ft_wcsncpy(wchar_t *dst, const wchar_t *src, size_t n)
 {
 	size_t	i;
+	size_t	len;
 
 	i = 0;
-	while (i < n && src[i] != L'\0')
+	len = 0;
+	while (len < n)
 	{
+		len += ft_wclen(src[i]);
+		if (len > n)
+			break ;
 		dst[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dst[i] = L'\0';
-		i++;
+		dst[++i] = L'\0';
 	}
 	return (dst);
 }
@@ -154,12 +154,13 @@ int		print_wstr(va_list ap, int opts, int min_width, int precision)
 	wchar_t	*cpy;
 
 	str = va_arg(ap, wchar_t *);
-	if (!str)
+	if (!str && !(opts & PRECISION))
 		return (ft_putwstr(L"(null)"));
 	if (opts & PRECISION)
 	{
 		cpy = ft_wcsnew(precision);
-		cpy = ft_wcsncpy(cpy, str, precision);
+		if (str)
+			cpy = ft_wcsncpy(cpy, str, precision);
 		str = cpy;
 	}
 	len = ft_wcslen(str);
@@ -180,12 +181,13 @@ int		print_str(va_list ap, int opts, int min_width, int precision)
 	if (opts & L)
 		return (print_wstr(ap, opts, min_width, precision));
 	str = va_arg(ap, char *);
-	if (!str)
+	if (!str && !(opts & PRECISION))
 		return (ft_putstr("(null)") * sizeof(char));
 	if (opts & PRECISION)
 	{
 		cpy = ft_strnew(precision);
-		cpy = ft_strncpy(cpy, str, precision);
+		if (str)
+			cpy = ft_strncpy(cpy, str, precision);
 		str = cpy;
 	}
 	len = ft_strlen(str);

@@ -6,13 +6,28 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/04 18:03:26 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/04 18:37:09 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 15:36:15 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
+
+int		octal_alt(uintmax_t n, int opts, int prec)
+{
+	if ((opts & O || opts & BIG_O) && opts & DIESE &&
+		(n != 0 || (n == 0 && opts & PRECISION && prec == 0)))
+		return (1);
+	return (0);
+}
+
+int		hex_alt(uintmax_t n, int opts, int prec)
+{
+	if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
+		return (1);
+	return (0);
+}
 
 static int	put_spaces(int minw, int prec, int len)
 {
@@ -39,6 +54,8 @@ static int	put_zeroes(int minw, int prec, int len, int opts)
 		ref = minw;
 	else
 		ref = prec;
+	if (opts & PRECISION && opts & P)
+		ref += 2;
 	while (ref > len++)
 	{
 		ft_putchar('0');
@@ -69,17 +86,17 @@ static int put_sign(intmax_t n, int opts, int *tmp)
 	return (1);
 }
 
-static int put_prefix(uintmax_t n, int opts)
+static int put_prefix(uintmax_t n, int opts, int prec)
 {
 	int		len;
 
 	len = 0;
-	if ((opts & O || opts & BIG_O) && opts & DIESE && n != 0)
+	if (octal_alt(n, opts, prec))
 	{
 		ft_putchar('0');
 		len = 1;
 	}
-	else if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
+	else if (hex_alt(n, opts, prec))
 	{
 		ft_putchar('0');
 		if (opts & P || opts & X)
@@ -98,16 +115,16 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(u
 	char	*res;
 
 	res = convert(n, &len);
-	if ((opts & O || opts & BIG_O) && opts & DIESE && n != 0)
-		len++;
-	else if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
-		len += 2;
 	if (opts & X || opts & P)
 		ft_strtolower(res);
+	if (octal_alt(n, opts, prec))
+		len++;
+	else if (hex_alt(n, opts, prec))
+		len += 2;
 	tmp = len;
 	if (!(opts & MINUS) && !(opts & ZERO))
 		len += put_spaces(minw, prec, tmp);
-	tmp += put_prefix(n, opts);
+	put_prefix(n, opts, prec);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts);
 	if (opts & PRECISION && prec == 0 && n == 0)
