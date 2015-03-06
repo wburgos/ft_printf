@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 17:12:27 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 18:22:54 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,8 +398,6 @@ int		print_badchar(char c, int opts, int min_width, int precision)
 {
 	int		len;
 
-	if (opts & PRECISION && precision == 0)
-		c = 0;
 	len = sizeof(char);
 	if (!(opts & MINUS))
 		len = putspaces(min_width, len, opts);
@@ -450,18 +448,6 @@ fprint	*init_ftab()
 	return (ftab);
 }
 
-int		check_next_pct(char *fmt)
-{
-	int		i;
-
-	i = 0;
-	while (fmt[i] == ' ')
-		i++;
-	if (fmt[i] == '%')
-		return (i + 1);
-	return (0);
-}
-
 int		ft_printf(char *fmt, ...)
 {
 	int		i;
@@ -494,13 +480,6 @@ int		ft_printf(char *fmt, ...)
 			fmt++;
 			if (!*fmt)
 				break ;
-			if ((fwd = check_next_pct(fmt)))
-			{
-				ft_putchar('%');
-				i++;
-				fmt += fwd;
-				continue ;
-			}
 			opts = parse_opts(&fmt, &min_width, &precision, &conv_i, conv);
 			if (conv_i == -1)
 				i += print_badchar(*fmt, opts, min_width, precision) ;

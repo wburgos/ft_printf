@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/04 18:03:26 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 15:36:15 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 18:27:58 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		octal_alt(uintmax_t n, int opts, int prec)
 	return (0);
 }
 
-int		hex_alt(uintmax_t n, int opts, int prec)
+int		hex_alt(uintmax_t n, int opts)
 {
 	if (((opts & X || opts & BIG_X) && opts & DIESE && n != 0) || opts & P)
 		return (1);
@@ -44,7 +44,7 @@ static int	put_spaces(int minw, int prec, int len)
 	return (i);
 }
 
-static int	put_zeroes(int minw, int prec, int len, int opts)
+static int	put_zeroes(int minw, int prec, int len, int opts, int not_null)
 {
 	int		ref;
 	int		i;
@@ -54,7 +54,7 @@ static int	put_zeroes(int minw, int prec, int len, int opts)
 		ref = minw;
 	else
 		ref = prec;
-	if (opts & PRECISION && opts & P)
+	if (opts & PRECISION && hex_alt(not_null, opts))
 		ref += 2;
 	while (ref > len++)
 	{
@@ -96,7 +96,7 @@ static int put_prefix(uintmax_t n, int opts, int prec)
 		ft_putchar('0');
 		len = 1;
 	}
-	else if (hex_alt(n, opts, prec))
+	else if (hex_alt(n, opts))
 	{
 		ft_putchar('0');
 		if (opts & P || opts & X)
@@ -119,14 +119,14 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(u
 		ft_strtolower(res);
 	if (octal_alt(n, opts, prec))
 		len++;
-	else if (hex_alt(n, opts, prec))
+	else if (hex_alt(n, opts))
 		len += 2;
 	tmp = len;
 	if (!(opts & MINUS) && !(opts & ZERO))
 		len += put_spaces(minw, prec, tmp);
 	put_prefix(n, opts, prec);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
-		len += put_zeroes(minw, prec, tmp, opts);
+		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
 	if (opts & PRECISION && prec == 0 && n == 0)
 		len--;
 	else
@@ -150,7 +150,7 @@ int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 		len += put_spaces(minw, prec, tmp);
 	len += put_sign(n, opts, &tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
-		len += put_zeroes(minw, prec, tmp, opts);
+		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
 	if (opts & PRECISION && prec == 0 && n == 0)
 		len--;
 	else

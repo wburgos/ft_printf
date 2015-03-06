@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 18:35:54 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 18:10:29 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,6 @@ int		read_converter(char *fmt, int *opts, char *conv)
 
 	i = 0;
 	corres = init_corres();
-	if (*fmt == '%')
-		return (-1);
 	if ((i = ft_inarray(*fmt, conv)) != -1)
 		*opts |= corres[i];
 	return (i);
