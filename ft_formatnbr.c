@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/04 18:03:26 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 18:27:58 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 23:04:49 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(u
 	res = convert(n, &len);
 	if (opts & X || opts & P)
 		ft_strtolower(res);
+	if (opts & PRECISION && prec == 0 && n == 0)
+		len--;
 	if (octal_alt(n, opts, prec))
 		len++;
 	else if (hex_alt(n, opts))
@@ -127,9 +129,7 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(u
 	put_prefix(n, opts, prec);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
-	if (opts & PRECISION && prec == 0 && n == 0)
-		len--;
-	else
+	if (!(opts & PRECISION && prec == 0 && n == 0))
 		ft_putstr(res);
 	free(res);
 	if (opts & MINUS)
@@ -143,17 +143,17 @@ int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 	int		tmp;
 
 	len = ft_nbdigits(n);
+	if (opts & PRECISION && prec == 0 && n == 0)
+		len--;
 	tmp = len;
-	if (n < 0)
+	if (n < 0 || (n >= 0 && (opts & PLUS || opts & SPACE)))
 		prec++;
 	if (!(opts & MINUS) && (!(opts & ZERO) || opts & PRECISION))
 		len += put_spaces(minw, prec, tmp);
 	len += put_sign(n, opts, &tmp);
 	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
 		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
-	if (opts & PRECISION && prec == 0 && n == 0)
-		len--;
-	else
+	if (!(opts & PRECISION && prec == 0 && n == 0))
 		ft_putunbr((n < 0) ? (-n) : (n));
 	if (opts & MINUS)
 		len += put_spaces(minw, prec, tmp);

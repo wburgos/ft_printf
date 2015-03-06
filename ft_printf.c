@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 18:22:54 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/06 23:19:02 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,9 @@ char	*utoa_base(uintmax_t n, int *nbdig, int base)
 		{
 			rem = n % base;
 			n /= base;
-			res[len] = rem + '0';
-			len++;
+			res[len++] = rem + '0';
 		}
+		res[len] = '\0';
 		res = ft_strrev(res);
 	}
 	return (res);
@@ -299,18 +299,18 @@ int		print_hex(va_list ap, int opts, int min_width, int precision)
 
 	if (opts & P)
 		len = ft_formatunbr((uintmax_t)va_arg(ap, void *), opts, min_width, precision, &conv_hex);
-	else if (opts & L)
-		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_hex);
-	else if (opts & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_hex);
-	else if (opts & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
-	else if (opts & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
 	else if (opts & J)
 		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_hex);
 	else if (opts & Z)
 		len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_hex);
+	else if (opts & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_hex);
+	else if (opts & L)
+		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_hex);
+	else if (opts & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
+	else if (opts & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
 	else
 		len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
 	return (len);
@@ -320,18 +320,18 @@ int		print_oct(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
 
-	if (opts & L || opts & BIG_O)
-		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_octal);
-	else if (opts & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_octal);
-	else if (opts & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
-	else if (opts & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
-	else if (opts & J)
+	if (opts & J)
 		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_octal);
 	else if (opts & Z)
 		len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_octal);
+	else if (opts & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_octal);
+	else if (opts & L || opts & BIG_O)
+		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_octal);
+	else if (opts & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
+	else if (opts & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
 	else
 		len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
 	return (len);
@@ -344,7 +344,9 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 	len = 0;
 	if (opts & D || opts & I || opts & BIG_D)
 	{
-		if (opts & LL)
+		if (opts & J || opts & Z)
+			len = ft_formatnbr(va_arg(ap, intmax_t), opts, min_width, precision);
+		else if (opts & LL)
 			len = ft_formatnbr(va_arg(ap, long long), opts, min_width, precision);
 		else if (opts & L || opts & BIG_D)
 			len = ft_formatnbr(va_arg(ap, long), opts, min_width, precision);
@@ -352,14 +354,16 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 			len = ft_formatnbr((char)va_arg(ap, int), opts, min_width, precision);
 		else if (opts & H)
 			len = ft_formatnbr((short)va_arg(ap, int), opts, min_width, precision);
-		else if (opts & J || opts & Z)
-			len = ft_formatnbr(va_arg(ap, intmax_t), opts, min_width, precision);
 		else
 			len = ft_formatnbr(va_arg(ap, int), opts, min_width, precision);
 	}
 	if (opts & U || opts & BIG_U)
 	{
-		if (opts & LL)
+		if (opts & J)
+			len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_dec);
+		else if (opts & Z)
+			len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_dec);
+		else if (opts & LL)
 			len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_dec);
 		else if (opts & L || opts & BIG_U)
 			len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_dec);
@@ -367,10 +371,6 @@ int		print_nbr(va_list ap, int opts, int min_width, int precision)
 			len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_dec);
 		else if (opts & H)
 			len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_dec);
-		else if (opts & J)
-			len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_dec);
-		else if (opts & Z)
-			len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_dec);
 		else
 			len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision, &conv_dec);
 	}
@@ -467,7 +467,7 @@ int		ft_printf(char *fmt, ...)
 	opts = 0;
 	min_width = 0;
 	precision = 0;
-	conv_i = 0;
+	conv_i = -1;
 	while (*fmt)
 	{
 		if (*fmt != '%')
@@ -481,9 +481,11 @@ int		ft_printf(char *fmt, ...)
 			if (!*fmt)
 				break ;
 			opts = parse_opts(&fmt, &min_width, &precision, &conv_i, conv);
+			if (!*fmt)
+				break ;
 			if (conv_i == -1)
 				i += print_badchar(*fmt, opts, min_width, precision) ;
-			else
+			else if (conv_i != -1)
 				i += ftab[conv_i](ap, opts, min_width, precision);
 		}
 		fmt++;
