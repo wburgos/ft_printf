@@ -6,11 +6,12 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 17:53:49 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:26:14 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:14:28 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 #include "ft_printf.h"
 
 static int	octal_alt(uintmax_t n, int opts, int prec)

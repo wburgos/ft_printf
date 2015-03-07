@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:53:57 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:10:05 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ static int	reads(char **fmt, int *opts, int *min_width, int *precision)
 
 int			parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
 {
-	int		fwd;
 	int		opts;
 	int		is_valid;
 	char	*conv;
 
-	fwd = 0;
 	opts = 0;
 	conv = init_conv();
 	while (**fmt)

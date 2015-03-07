@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 21:35:07 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:30:08 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ typedef int 		(*fprint)(va_list, int, int, int);
 # define Z			16777216
 # define MIN_WIDTH	33554432
 # define PRECISION	67108864
-
-# define diese(x)	(x & DIESE)
-# define zero(x)	(x & ZERO)
-# define minus(x)	(x & MINUS)
-# define p(x)		(x & P)
-# define minw(x)	(x & MIN_WIDTH)
-# define prec(x)	(x & PRECISION)
 
 # define C_SIZE		14
 # define I_S		0

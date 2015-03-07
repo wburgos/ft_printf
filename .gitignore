@@ -1,5 +1,4 @@
 *.a
-printf
 main.c
 a.out.dSYM/
 a.out

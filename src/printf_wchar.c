@@ -6,11 +6,11 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:42:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 21:16:59 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:18:04 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <wchar.h>
+#include "libft.h"
 #include "ft_printf.h"
 
 // static int	putwspaces(int min_width, int len, int opts)

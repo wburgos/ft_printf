@@ -6,10 +6,11 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 20:04:09 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 20:09:07 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:17:50 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "ft_printf.h"
 
 int		printf_noconv(char c, int opts, int min_width, int precision)
