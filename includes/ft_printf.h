@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:53:38 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 20:04:26 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,14 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
 					char *(*convert)(uintmax_t, int *));
 int		read_flags(char c, int *opts);
 int		read_converter(char c, int *opts, char *conv);
+int		printf_str(va_list ap, int opts, int min_width, int precision);
+int		printf_wstr(va_list ap, int opts, int min_width, int precision);
+int		printf_hex(va_list ap, int opts, int min_width, int precision);
+int		printf_nb(va_list ap, int opts, int min_width, int precision);
+int		printf_oct(va_list ap, int opts, int min_width, int precision);
+int		printf_char(va_list ap, int opts, int min_width, int precision);
+int		printf_wchar(va_list ap, int opts, int min_width, int precision);
+char	*utoa_base(uintmax_t n, int *nbdig, int base);
+int		printf_spaces(int min_width, int len, int opts);
+int		printf_noconv(char c, int opts, int min_width, int precision);
 #endif
