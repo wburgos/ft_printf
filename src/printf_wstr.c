@@ -6,14 +6,14 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:44:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:39:21 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:47:08 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int		printf_wstr(va_list ap, int opts, int min_width, int precision)
+int		printf_wstr(va_list ap, t_opts opts)
 {
 	int		len;
 	wchar_t	*str;

@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:30:08 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:46:52 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@
 #include <stdarg.h>
 #include <stdint.h>
 
-typedef int 		(*fprint)(va_list, int, int, int);
+typedef struct 	s_opts
+{
+	int		flags;
+	int		precision;
+	int		min_width;
+}				t_opts;
+
+typedef int 		(*fprint)(va_list, t_opts);
 
 # define DIESE		1
 # define ZERO		2
@@ -66,13 +73,13 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
 int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
 	char *(*convert)(uintmax_t, int *));
-int		printf_str(va_list ap, int opts, int min_width, int precision);
-int		printf_wstr(va_list ap, int opts, int min_width, int precision);
-int		printf_hex(va_list ap, int opts, int min_width, int precision);
-int		printf_nb(va_list ap, int opts, int min_width, int precision);
-int		printf_oct(va_list ap, int opts, int min_width, int precision);
-int		printf_char(va_list ap, int opts, int min_width, int precision);
-int		printf_wchar(va_list ap, int opts, int min_width, int precision);
+int		printf_str(va_list ap, t_opts opts);
+int		printf_wstr(va_list ap, t_opts opts);
+int		printf_hex(va_list ap, t_opts opts);
+int		printf_nb(va_list ap, t_opts opts);
+int		printf_oct(va_list ap, t_opts opts);
+int		printf_char(va_list ap, t_opts opts);
+int		printf_wchar(va_list ap, t_opts opts);
 char	*utoa_base(uintmax_t n, int *nbdig, int base);
 int		printf_spaces(int min_width, int len, int opts);
 int		printf_noconv(char c, int opts, int min_width, int precision);

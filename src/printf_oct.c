@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:37:02 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 19:58:41 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:43:57 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ static char	*conv_octal(uintmax_t n, int *nbdig)
 	return (utoa_base(n, nbdig, 8));
 }
 
-int			printf_oct(va_list ap, int opts, int min_width, int precision)
+int			printf_oct(va_list ap, t_opts opts)
 {
 	int		len;
+	t_opts	opts;
 
+	opts.flags = opts;
+	opts.min_width = min_width;
+	opts.precision = precision;
 	if (opts & J)
 		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_octal);
 	else if (opts & Z)

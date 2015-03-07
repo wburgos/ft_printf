@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 21:32:20 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:51:09 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@ int		ft_printf(char *fmt, ...)
 {
 	int		i;
 	va_list	ap;
-	int		opts;
-	int		min_width;
-	int		precision;
+	t_opts	opts;
 	int		conv_i;
 	fprint	*ftab;
 
 	va_start(ap, fmt);
 	ftab = init_ftab();
 	i = 0;
-	opts = 0;
-	min_width = 0;
-	precision = 0;
+	opts.flags = 0;
+	opts.min_width = 0;
+	opts.precision = 0;
 	while (*fmt)
 	{
 		conv_i = -1;
@@ -66,13 +64,14 @@ int		ft_printf(char *fmt, ...)
 			fmt++;
 			if (!*fmt)
 				break ;
-			opts = parse_opts(&fmt, &min_width, &precision, &conv_i);
+			opts = parse_opts(&fmt, &(opts.min_width), &(opts.precision),
+				&conv_i);
 			if (!*fmt)
 				break ;
 			if (conv_i == -1)
-				i += printf_noconv(*fmt, opts, min_width, precision) ;
+				i += printf_noconv(*fmt, opts);
 			else if (conv_i != -1)
-				i += ftab[conv_i](ap, opts, min_width, precision);
+				i += ftab[conv_i](ap, opts);
 		}
 		fmt++;
 	}

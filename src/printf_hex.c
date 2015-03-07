@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:45:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 19:58:06 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:57:04 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,32 @@ static char	*conv_hex(uintmax_t n, int *nbdig)
 	return (hex);
 }
 
-int		printf_hex(va_list ap, int opts, int min_width, int precision)
+int		printf_hex(va_list ap, t_opts *opts)
 {
 	int		len;
+	int		flags;
+	int		min_width;
+	int		precision;
 
-	if (opts & P)
-		len = ft_formatunbr((uintmax_t)va_arg(ap, void *), opts, min_width, precision, &conv_hex);
-	else if (opts & J)
-		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_hex);
-	else if (opts & Z)
-		len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_hex);
-	else if (opts & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_hex);
-	else if (opts & L)
-		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_hex);
-	else if (opts & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
-	else if (opts & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
+	len = 0;
+	flags = opts->flags;
+	min_width = opts->min_width;
+	precision = opts->precision;
+	if (flags & P)
+		len = ft_formatunbr((uintmax_t)va_arg(ap, void *), flags, min_width, precision, &conv_hex);
+	else if (flags & J)
+		len = ft_formatunbr(va_arg(ap, uintmax_t), flags, min_width, precision, &conv_hex);
+	else if (flags & Z)
+		len = ft_formatunbr(va_arg(ap, size_t), flags, min_width, precision, &conv_hex);
+	else if (flags & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), flags, min_width, precision, &conv_hex);
+	else if (flags & L)
+		len = ft_formatunbr(va_arg(ap, unsigned long), flags, min_width, precision, &conv_hex);
+	else if (flags & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
+	else if (flags & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
 	else
-		len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision, &conv_hex);
+		len = ft_formatunbr(va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
 	return (len);
 }
