@@ -167,23 +167,61 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *c
 {
 	int		fwd;
 	int		opts;
+	char	*seq;
+	int		i;
+	int		j;
 
 	fwd = 0;
 	opts = 0;
-	while (read_flags(**fmt, &opts))
-		(*fmt)++;
-	if ((fwd = read_min_width(*fmt, min_width)))
+	i = 0;
+	j = 0;
+	seq = NULL;
+	// while ((*fmt)[i])
+	// {
+	// 	if ((*fmt)[i] == '%')
+	// 		break ;
+	// 	if (ft_inarray((*fmt)[i], conv) != -1)
+	// 	{
+	// 		seq = ft_strdup(*fmt);
+	// 		break ;
+	// 	}
+	// 	i++;
+	// }
+	while (seq && seq[j] && i != j)
 	{
-		opts |= MIN_WIDTH;
-		(*fmt) += fwd;
+		if (read_flags(seq[j], &opts))
+			j++;
+		if ((fwd = read_min_width(seq + j, min_width)))
+		{
+			opts |= MIN_WIDTH;
+			j += fwd;
+		}
+		if ((fwd = read_precision(seq + j, precision)))
+		{
+			opts |= PRECISION;
+			j += fwd;
+		}
+		if ((fwd = read_modifiers(seq + j, &opts)))
+			j += fwd;
+		if (ft_inarray((*fmt)[i], conv) != -1)
+		{
+			*conv_i = read_converter(seq[j], &opts, conv);
+			break ;
+		}
 	}
-	if ((fwd = read_precision(*fmt, precision)))
-	{
-		opts |= PRECISION;
-		(*fmt) += fwd;
-	}
-	if ((fwd = read_modifiers(*fmt, &opts)))
-		(*fmt) += fwd;
-	*conv_i = read_converter(**fmt, &opts, conv);
+	// while (read_flags(**fmt, &opts))
+	// 	(*fmt)++;
+	// if ((fwd = read_min_width(*fmt, min_width)))
+	// {
+	// 	opts |= MIN_WIDTH;
+	// 	(*fmt) += fwd;
+	// }
+	// if ((fwd = read_precision(*fmt, precision)))
+	// {
+	// 	opts |= PRECISION;
+	// 	(*fmt) += fwd;
+	// }
+	// if ((fwd = read_modifiers(*fmt, &opts)))
+	// 	(*fmt) += fwd;
 	return (opts);
 }
