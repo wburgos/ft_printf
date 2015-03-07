@@ -79,6 +79,16 @@ wchar_t	*ft_wcsncpy(wchar_t *dst, const wchar_t *src, size_t n)
 	return (dst);
 }
 
+wchar_t	*ft_wcscpy(wchar_t *dst, const wchar_t *src)
+{
+	size_t	i;
+
+	i = 0;
+	while ((dst[i] = src[i]) != L'\0')
+		i++;
+	return (dst);
+}
+
 wchar_t	*ft_wcsnew(size_t size)
 {
 	wchar_t	*str;
@@ -147,6 +157,18 @@ int		putspaces(int min_width, int len, int opts)
 	return (len);
 }
 
+wchar_t	*ft_strwdup(wchar_t *src)
+{
+	wchar_t	*dst;
+	int		len;
+
+	len = ft_wcslen(src) + sizeof(wchar_t);
+	dst = ft_memalloc(sizeof(wchar_t) * len);
+	if (dst)
+		ft_wcscpy(dst, src);
+	return (dst);
+}
+
 int		print_wstr(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
@@ -154,8 +176,8 @@ int		print_wstr(va_list ap, int opts, int min_width, int precision)
 	wchar_t	*cpy;
 
 	str = va_arg(ap, wchar_t *);
-	if (!str && !(opts & PRECISION))
-		return (ft_putwstr(L"(null)"));
+	if (!str)
+		str = ft_strwdup(L"(null)");
 	if (opts & PRECISION)
 	{
 		cpy = ft_wcsnew(precision);
@@ -181,8 +203,8 @@ int		print_str(va_list ap, int opts, int min_width, int precision)
 	if (opts & L)
 		return (print_wstr(ap, opts, min_width, precision));
 	str = va_arg(ap, char *);
-	if (!str && !(opts & PRECISION))
-		return (ft_putstr("(null)") * sizeof(char));
+	if (!str)
+		str = ft_strdup("(null)");
 	if (opts & PRECISION)
 	{
 		cpy = ft_strnew(precision);
@@ -383,8 +405,6 @@ int		print_wchar(va_list ap, int opts, int min_width, int precision)
 	wchar_t	c;
 
 	c = va_arg(ap, wint_t);
-	if (opts & PRECISION && precision == 0)
-		c = L'\0';
 	len = ft_wclen(c);
 	if (!(opts & MINUS))
 		len = putwspaces(min_width, len, opts);
@@ -415,8 +435,6 @@ int		print_char(va_list ap, int opts, int min_width, int precision)
 	if (opts & L)
 		return (print_wchar(ap, opts, min_width, precision));
 	c = va_arg(ap, int);
-	if (opts & PRECISION && precision == 0)
-		c = 0;
 	len = sizeof(char);
 	if (!(opts & MINUS))
 		len = putspaces(min_width, len, opts);
