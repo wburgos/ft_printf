@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:31:42 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 18:53:38 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ typedef int 		(*fprint)(va_list, int, int, int);
 # define I_C		12
 # define I_BIGC		13
 
-int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i,
-					char *conv);
+int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
 int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
 					char *(*convert)(uintmax_t, int *));

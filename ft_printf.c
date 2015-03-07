@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:31:21 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 18:37:35 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,6 @@
 #include <unistd.h>
 #include "libft.h"
 #include "ft_printf.h"
-
-char	*init_conv(void)
-{
-	char	*conv;
-
-	conv = ft_strnew(C_SIZE);
-	conv[I_S] = 's';
-	conv[I_BIGS] = 'S';
-	conv[I_P] = 'p';
-	conv[I_D] = 'd';
-	conv[I_BIGD] = 'D';
-	conv[I_I] = 'i';
-	conv[I_O] = 'o';
-	conv[I_BIGO] = 'O';
-	conv[I_U] = 'u';
-	conv[I_BIGU] = 'U';
-	conv[I_X] = 'x';
-	conv[I_BIGX] = 'X';
-	conv[I_C] = 'c';
-	conv[I_BIGC] = 'C';
-	return (conv);
-}
 
 int		ft_wclen(wchar_t wchar)
 {
@@ -466,7 +444,7 @@ int		print_char(va_list ap, int opts, int min_width, int precision)
 	return (len);
 }
 
-fprint	*init_ftab()
+static fprint	*init_ftab()
 {
 	fprint *ftab;
 
@@ -496,12 +474,10 @@ int		ft_printf(char *fmt, ...)
 	int		min_width;
 	int		precision;
 	int		conv_i;
-	char	*conv;
 	fprint	*ftab;
 	int		fwd;
 
 	va_start(ap, fmt);
-	conv = init_conv();
 	ftab = init_ftab();
 	i = 0;
 	opts = 0;
@@ -520,7 +496,7 @@ int		ft_printf(char *fmt, ...)
 			fmt++;
 			if (!*fmt)
 				break ;
-			opts = parse_opts(&fmt, &min_width, &precision, &conv_i, conv);
+			opts = parse_opts(&fmt, &min_width, &precision, &conv_i);
 			if (!*fmt)
 				break ;
 			if (conv_i == -1)
@@ -530,7 +506,6 @@ int		ft_printf(char *fmt, ...)
 		}
 		fmt++;
 	}
-	free(conv);
 	free(ftab);
 	return (i);
 }
