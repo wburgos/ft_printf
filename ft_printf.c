@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 15:51:44 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 18:31:21 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
 #include <unistd.h>
 #include "libft.h"
 #include "ft_printf.h"
+
+char	*init_conv(void)
+{
+	char	*conv;
+
+	conv = ft_strnew(C_SIZE);
+	conv[I_S] = 's';
+	conv[I_BIGS] = 'S';
+	conv[I_P] = 'p';
+	conv[I_D] = 'd';
+	conv[I_BIGD] = 'D';
+	conv[I_I] = 'i';
+	conv[I_O] = 'o';
+	conv[I_BIGO] = 'O';
+	conv[I_U] = 'u';
+	conv[I_BIGU] = 'U';
+	conv[I_X] = 'x';
+	conv[I_BIGX] = 'X';
+	conv[I_C] = 'c';
+	conv[I_BIGC] = 'C';
+	return (conv);
+}
 
 int		ft_wclen(wchar_t wchar)
 {

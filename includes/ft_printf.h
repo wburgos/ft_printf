@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/04 18:18:59 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 18:31:42 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ typedef int 		(*fprint)(va_list, int, int, int);
 # define I_C		12
 # define I_BIGC		13
 
-int		ft_inarray(char c, char *arr);
-char	*init_conv(void);
-int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *conv);
+int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i,
+					char *conv);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
-int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(uintmax_t, int *));
-
+int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
+					char *(*convert)(uintmax_t, int *));
+int		read_flags(char c, int *opts);
+int		read_converter(char c, int *opts, char *conv);
 #endif

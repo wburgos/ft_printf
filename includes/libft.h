@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 15:51:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/03 22:13:45 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 17:56:32 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,6 @@ int					ft_nbdigits(intmax_t n);
 char				*ft_strrev(char *str);
 void				ft_swap(char *a, char *b);
 void				ft_strtolower(char *str);
+void				ft_putnchar(char c, int n);
+int					ft_inarray(char c, char *arr);
 #endif

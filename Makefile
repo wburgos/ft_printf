@@ -16,7 +16,9 @@ SRCS = 	ft_printf.c opts.c ft_memalloc.c ft_bzero.c ft_printf.c ft_putchar.c \
 		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c ft_utoa.c \
 		ft_strsub.c ft_atoi.c ft_isdigit.c ft_itoa.c ft_strcat.c ft_swap.c \
 		ft_strncpy.c ft_strrev.c ft_strjoin.c ft_putunbr.c ft_nbdigits.c \
-		ft_formatnbr.c ft_strtolower.c
+		ft_formatnbr.c ft_strtolower.c ft_putnchar.c read_flags.c \
+		ft_formatunbr.c ft_inarray.c read_modifiers.c read_min_width.c \
+		read_precision.c read_converter.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 
