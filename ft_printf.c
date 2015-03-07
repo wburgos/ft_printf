@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 19:44:19 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 21:32:20 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		ft_printf(char *fmt, ...)
 	int		precision;
 	int		conv_i;
 	fprint	*ftab;
-	int		fwd;
 
 	va_start(ap, fmt);
 	ftab = init_ftab();

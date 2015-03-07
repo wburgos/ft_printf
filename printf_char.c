@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 20:02:20 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 20:05:30 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 21:44:05 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		printf_char(va_list ap, int opts, int min_width, int precision)
 {
 	int		len;
-	char	c;
-
+ 	char	c;
+  
 	if (opts & L)
 		return (printf_wchar(ap, opts, min_width, precision));
 	c = va_arg(ap, int);

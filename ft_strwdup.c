@@ -6,11 +6,10 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:47:04 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 19:47:21 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 21:15:51 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <wchar.h>
 #include "libft.h"
 
 wchar_t	*ft_strwdup(wchar_t *src)

@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 20:04:26 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 21:35:07 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ typedef int 		(*fprint)(va_list, int, int, int);
 # define minw(x)	(x & MIN_WIDTH)
 # define prec(x)	(x & PRECISION)
 
-# define mlen(x, y)	((p(x) || diese(x)) ? (y + 2) : (y))
-
 # define C_SIZE		14
 # define I_S		0
 # define I_BIGS		1
@@ -74,9 +72,7 @@ typedef int 		(*fprint)(va_list, int, int, int);
 int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
 int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
-					char *(*convert)(uintmax_t, int *));
-int		read_flags(char c, int *opts);
-int		read_converter(char c, int *opts, char *conv);
+	char *(*convert)(uintmax_t, int *));
 int		printf_str(va_list ap, int opts, int min_width, int precision);
 int		printf_wstr(va_list ap, int opts, int min_width, int precision);
 int		printf_hex(va_list ap, int opts, int min_width, int precision);
@@ -87,4 +83,9 @@ int		printf_wchar(va_list ap, int opts, int min_width, int precision);
 char	*utoa_base(uintmax_t n, int *nbdig, int base);
 int		printf_spaces(int min_width, int len, int opts);
 int		printf_noconv(char c, int opts, int min_width, int precision);
+int		read_converter(char c, int *opts, char *conv);
+int		read_flags(char c, int *opts);
+int		read_min_width(char *fmt, int *min_width);
+int		read_modifiers(char *fmt, int *opts);
+int		read_precision(char *fmt, int *precision);
 #endif

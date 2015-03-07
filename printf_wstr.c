@@ -6,12 +6,10 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:44:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 20:03:50 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 21:16:24 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <wchar.h>
 #include "ft_printf.h"
 #include "libft.h"
 
