@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 15:54:57 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 15:57:32 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,19 +179,19 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *c
 			(*fmt)++;
 			is_valid = 1;
 		}
-		if ((fwd = read_min_width(*fmt, min_width)))
+		while ((fwd = read_min_width(*fmt, min_width)))
 		{
 			opts |= MIN_WIDTH;
 			(*fmt) += fwd;
 			is_valid = 1;
 		}
-		if ((fwd = read_precision(*fmt, precision)))
+		while ((fwd = read_precision(*fmt, precision)))
 		{
 			opts |= PRECISION;
 			(*fmt) += fwd;
 			is_valid = 1;
 		}
-		if ((fwd = read_modifiers(*fmt, &opts)))
+		while ((fwd = read_modifiers(*fmt, &opts)))
 		{
 			(*fmt) += fwd;
 			is_valid = 1;

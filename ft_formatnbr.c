@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/04 18:03:26 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 23:04:49 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 17:46:41 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	put_zeroes(int minw, int prec, int len, int opts, int not_null)
 	return (i);
 }
 
-static int put_sign(intmax_t n, int opts, int *tmp)
+static void put_sign(intmax_t n, int opts)
 {
 	char	sign;
 
@@ -80,10 +80,6 @@ static int put_sign(intmax_t n, int opts, int *tmp)
 	}
 	if (sign != 0)
 		ft_putchar(sign);
-	if (sign == 0 || sign == '-')
-		return (0);
-	(*tmp)++;
-	return (1);
 }
 
 static int put_prefix(uintmax_t n, int opts, int prec)
@@ -137,25 +133,51 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec, char *(*convert)(u
 	return (len);
 }
 
+static void		ft_putnchar(char c, int n)
+{
+	while (n-- > 0)
+		ft_putchar(c);
+}
+
+static int		has_sign(intmax_t n, int opts)
+{
+	return (n >= 0 && (opts & PLUS || opts & SPACE));
+}
+
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec)
 {
 	int		len;
-	int		tmp;
+	int		sign;
+	int		nbzero;
+	int		nbspaces;
 
-	len = ft_nbdigits(n);
-	if (opts & PRECISION && prec == 0 && n == 0)
-		len--;
-	tmp = len;
-	if (n < 0 || (n >= 0 && (opts & PLUS || opts & SPACE)))
-		prec++;
-	if (!(opts & MINUS) && (!(opts & ZERO) || opts & PRECISION))
-		len += put_spaces(minw, prec, tmp);
-	len += put_sign(n, opts, &tmp);
-	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
-		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
+	nbzero = 0;
+	nbspaces = 0;
+	sign = has_sign(n, opts);
+	len = (opts & PRECISION && prec == 0 && n == 0) ? 0 : (ft_nbdigits(n) + sign);
+	if (opts & PRECISION && prec > len - (n < 0 || sign))
+	{
+		nbzero += prec - len + (n < 0 || sign);
+		len += nbzero;
+	}
+	if (opts & MIN_WIDTH && opts & ZERO && !(opts & MINUS)
+		&& !(opts & PRECISION) && minw > len)
+	{
+		nbzero += minw - len;
+		len += nbzero;
+	}
+	if (opts & MIN_WIDTH && (!(opts & ZERO) || opts & MINUS || opts & PRECISION) && minw > len)
+	{
+		nbspaces += minw - len;
+		len += nbspaces;
+	}
+	if (!(opts & MINUS))
+		ft_putnchar(' ', nbspaces);
+	put_sign(n, opts);
+	ft_putnchar('0', nbzero);
 	if (!(opts & PRECISION && prec == 0 && n == 0))
 		ft_putunbr((n < 0) ? (-n) : (n));
 	if (opts & MINUS)
-		len += put_spaces(minw, prec, tmp);
+		ft_putnchar(' ', nbspaces);
 	return (len);
 }
