@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 23:24:09 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 15:54:57 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,61 +167,42 @@ int		parse_opts(char **fmt, int *min_width, int *precision, int *conv_i, char *c
 {
 	int		fwd;
 	int		opts;
-	char	*seq;
-	int		i;
-	int		j;
+	int		is_valid;
 
 	fwd = 0;
 	opts = 0;
-	i = 0;
-	j = 0;
-	seq = NULL;
-	// while ((*fmt)[i])
-	// {
-	// 	if ((*fmt)[i] == '%')
-	// 		break ;
-	// 	if (ft_inarray((*fmt)[i], conv) != -1)
-	// 	{
-	// 		seq = ft_strdup(*fmt);
-	// 		break ;
-	// 	}
-	// 	i++;
-	// }
-	while (seq && seq[j] && i != j)
+	while (**fmt)
 	{
-		if (read_flags(seq[j], &opts))
-			j++;
-		if ((fwd = read_min_width(seq + j, min_width)))
+		is_valid = 0;
+		while (read_flags(**fmt, &opts))
+		{
+			(*fmt)++;
+			is_valid = 1;
+		}
+		if ((fwd = read_min_width(*fmt, min_width)))
 		{
 			opts |= MIN_WIDTH;
-			j += fwd;
+			(*fmt) += fwd;
+			is_valid = 1;
 		}
-		if ((fwd = read_precision(seq + j, precision)))
+		if ((fwd = read_precision(*fmt, precision)))
 		{
 			opts |= PRECISION;
-			j += fwd;
+			(*fmt) += fwd;
+			is_valid = 1;
 		}
-		if ((fwd = read_modifiers(seq + j, &opts)))
-			j += fwd;
-		if (ft_inarray((*fmt)[i], conv) != -1)
+		if ((fwd = read_modifiers(*fmt, &opts)))
 		{
-			*conv_i = read_converter(seq[j], &opts, conv);
+			(*fmt) += fwd;
+			is_valid = 1;
+		}
+		if (ft_inarray(**fmt, conv) != -1)
+		{
+			*conv_i = read_converter(**fmt, &opts, conv);
 			break ;
 		}
+		if (!is_valid)
+			break ;
 	}
-	// while (read_flags(**fmt, &opts))
-	// 	(*fmt)++;
-	// if ((fwd = read_min_width(*fmt, min_width)))
-	// {
-	// 	opts |= MIN_WIDTH;
-	// 	(*fmt) += fwd;
-	// }
-	// if ((fwd = read_precision(*fmt, precision)))
-	// {
-	// 	opts |= PRECISION;
-	// 	(*fmt) += fwd;
-	// }
-	// if ((fwd = read_modifiers(*fmt, &opts)))
-	// 	(*fmt) += fwd;
 	return (opts);
 }

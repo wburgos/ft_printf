@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/06 23:19:02 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 15:51:44 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -485,9 +485,9 @@ int		ft_printf(char *fmt, ...)
 	opts = 0;
 	min_width = 0;
 	precision = 0;
-	conv_i = -1;
 	while (*fmt)
 	{
+		conv_i = -1;
 		if (*fmt != '%')
 		{
 			ft_putchar(*fmt);
