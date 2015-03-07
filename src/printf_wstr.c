@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:44:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 21:16:24 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:39:21 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		printf_wstr(va_list ap, int opts, int min_width, int precision)
 
 	str = va_arg(ap, wchar_t *);
 	if (!str)
-		str = ft_strwdup(L"(null)");
+		str = ft_wcsdup(L"(null)");
 	if (opts & PRECISION)
 	{
 		cpy = ft_wcsnew(precision);

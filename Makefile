@@ -20,7 +20,7 @@ FILES = ft_printf.c opts.c ft_inarray.c ft_memalloc.c ft_putchar.c ft_strnew.c \
 		ft_formatnbr.c ft_formatunbr.c ft_isdigit.c read_flags.c ft_nbdigits.c \
 		ft_putnchar.c ft_putstr.c ft_putunbr.c ft_putwchar.c ft_putwstr.c \
 		ft_strdup.c ft_strlen.c ft_strncpy.c ft_strsub.c ft_strtolower.c \
-		ft_strwdup.c ft_wclen.c printf_spaces.c ft_wcslen.c ft_strcpy.c \
+		ft_wcsdup.c ft_wclen.c printf_spaces.c ft_wcslen.c ft_strcpy.c \
 		ft_wcscpy.c ft_wcsncpy.c ft_wcsnew.c ft_wcutf8.c utoa_base.c \
 		ft_strrev.c
 OBJ = $(FILES:.c=.o)

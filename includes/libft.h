@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 15:51:39 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:29:44 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/07 22:33:48 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void				ft_putnchar(char c, int n);
 int					ft_inarray(char c, char *arr);
 int					ft_wclen(wchar_t wchar);
 int					ft_wcslen(wchar_t *str);
-wchar_t				*ft_strwdup(wchar_t *src);
+wchar_t				*ft_wcsdup(wchar_t *src);
 wchar_t				*ft_wcscpy(wchar_t *dst, const wchar_t *src);
 wchar_t				*ft_wcsnew(size_t size);
 wchar_t				*ft_wcsncpy(wchar_t *dst, const wchar_t *src, size_t n);
