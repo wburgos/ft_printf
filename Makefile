@@ -12,17 +12,16 @@
 
 NAME = libftprintf.a
 SRC = src/
-SRCS = 	ft_printf.c opts.c ft_memalloc.c ft_bzero.c ft_printf.c ft_putchar.c \
-		ft_putstr.c ft_strcpy.c ft_strdup.c ft_strlen.c ft_strnew.c ft_utoa.c \
-		ft_strsub.c ft_atoi.c ft_isdigit.c ft_itoa.c ft_strcat.c ft_swap.c \
-		ft_strncpy.c ft_strrev.c ft_strjoin.c ft_putunbr.c ft_nbdigits.c \
-		ft_formatnbr.c ft_strtolower.c ft_putnchar.c read_flags.c \
-		ft_formatunbr.c ft_inarray.c read_modifiers.c read_min_width.c \
-		read_precision.c read_converter.c ft_wclen.c printf_str.c printf_nb.c \
-		printf_wstr.c printf_hex.c printf_oct.c printf_char.c printf_wchar.c \
-		utoa_base.c ft_strwdup.c ft_wcscpy.c ft_wcsnew.c ft_wcsncpy.c \
-		printf_spaces.c printf_noconv.c ft_wcslen.c ft_putwstr.c ft_putwchar.c \
-		ft_wcutf8.c
+SRCS = 	ft_printf.c opts.c ft_inarray.c ft_memalloc.c ft_putchar.c ft_strnew.c \
+		printf_char.c printf_hex.c printf_nb.c printf_noconv.c printf_oct.c \
+		printf_str.c printf_wchar.c printf_wstr.c read_precision.c ft_atoi.c  \
+		read_converter.c read_modifiers.c read_min_width.c ft_bzero.c \
+		ft_formatnbr.c ft_formatunbr.c ft_isdigit.c read_flags.c ft_nbdigits.c \
+		ft_putnchar.c ft_putstr.c ft_putunbr.c ft_putwchar.c ft_putwstr.c \
+		ft_strdup.c ft_strlen.c ft_strncpy.c ft_strsub.c ft_strtolower.c \
+		ft_strwdup.c ft_wclen.c printf_spaces.c ft_wcslen.c ft_strcpy.c \
+		ft_wcscpy.c ft_wcsncpy.c ft_wcsnew.c ft_wcutf8.c utoa_base.c \
+		ft_strrev.c ft_swap.c
 OBJ = $(SRCS:.c=.o)
 INC = includes/
 
