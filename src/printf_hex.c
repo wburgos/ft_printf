@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 19:45:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:57:04 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 19:10:13 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,41 +27,47 @@ static int	hex_nbdigits(uintmax_t n)
 	return (len);
 }
 
-static char	*conv_hex(uintmax_t n, int *nbdig)
+static void	get_hex(uintmax_t n, char *hex, char *hex_sym)
 {
-	int			i;
-	int			len;
-	char		*sym;
-	char		*hex;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = (n == 0) ? 1 : 0;
+	while (n != 0)
+	{
+		hex[len++] = hex_sym[n & 0xF];
+		n >>= 4;
+	}
+	while (i < len / 2)
+	{
+		hex[i] ^= hex[len - i - 1];
+		hex[len - i - 1] ^= hex[i];
+		hex[i] ^= hex[len - i - 1];
+		i++;
+	}
+}
+
+static char	*conv_hex(uintmax_t n, int *nbdig)
+{
+	char		*hex;
+	char		*hex_sym;
+
 	*nbdig = hex_nbdigits(n);
 	hex = ft_strnew(*nbdig);
 	*hex = '0';
-	sym = ft_strdup("0123456789ABCDEF");
-	if (sym && hex)
+	hex_sym = ft_strdup("0123456789ABCDEF");
+	if (hex_sym && hex)
 	{
-		while (n != 0)
-		{
-			hex[len++] = sym[n & 0xF];
-			n >>= 4;
-		}
-		while (i < len / 2)
-		{
-			hex[i] ^= hex[len - i - 1];
-			hex[len - i - 1] ^= hex[i];
-			hex[i] ^= hex[len - i - 1];
-			i++;
-		}
-		free(sym);
+		get_hex(n, hex, hex_sym);
+		free(hex_sym);
 	}
-	if (!sym)
+	if (!hex_sym)
 		return (NULL);
 	return (hex);
 }
 
-int		printf_hex(va_list ap, t_opts *opts)
+int			printf_hex(va_list ap, t_opts *opts)
 {
 	int		len;
 

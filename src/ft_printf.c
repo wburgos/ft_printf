@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:51:09 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 19:43:34 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,32 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-static fprint	*init_ftab()
+static int		call_func(va_list ap, t_opts *opts, int i, char noconv)
 {
-	fprint *ftab;
-
-	ftab = ft_memalloc(sizeof(*ftab) * C_SIZE);
-	ftab[I_S] = printf_str;
-	ftab[I_BIGS] = printf_wstr;
-	ftab[I_P] = printf_hex;
-	ftab[I_D] = printf_nb;
-	ftab[I_BIGD] = printf_nb;
-	ftab[I_I] = printf_nb;
-	ftab[I_O] = printf_oct;
-	ftab[I_BIGO] = printf_oct;
-	ftab[I_U] = printf_nb;
-	ftab[I_BIGU] = printf_nb;
-	ftab[I_X] = printf_hex;
-	ftab[I_BIGX] = printf_hex;
-	ftab[I_C] = printf_char;
-	ftab[I_BIGC] = printf_wchar;
-	return (ftab);
+	if (i == -1)
+		return (printf_noconv(noconv, opts));
+	else if (i == I_S)
+		return (printf_str(ap, opts));
+	else if (i == I_BIGS)
+		return (printf_wstr(ap, opts));
+	else if (i == I_D || i == I_BIGD || i == I_I || i == I_U || i == I_BIGU)
+		return (printf_nb(ap, opts));
+	else if (i == I_O || i == I_BIGO)
+		return (printf_oct(ap, opts));
+	else if (i == I_P || i == I_X || i == I_BIGX)
+		return (printf_hex(ap, opts));
+	else if (i == I_C)
+		return (printf_char(ap, opts));
+	else if (i == I_BIGC)
+		return (printf_wchar(ap, opts));
+	return (0);
 }
 
-static int		print(va_list ap, char **fmt, fprint *ftab)
+static int		print(va_list ap, char **fmt)
 {
-	int		conv_i;
-	t_opts	opts;
 	int		i;
+	t_opts	opts;
+	int		conv_i;
 
 	i = 0;
 	opts.flags = 0;
@@ -52,21 +51,16 @@ static int		print(va_list ap, char **fmt, fprint *ftab)
 	conv_i = parse_opts(ap, fmt, &opts);
 	if (!**fmt)
 		return (-1);
-	if (conv_i == -1)
-		i += printf_noconv(**fmt, &opts);
-	else
-		i += ftab[conv_i](ap, &opts);
+	i += call_func(ap, &opts, conv_i, **fmt);
 	return (i);
 }
 
 static int		parse(va_list ap, char *fmt)
 {
 	int		i;
-	fprint	*ftab;
 	int		printlen;
 
 	i = 0;
-	ftab = init_ftab();
 	while (*fmt)
 	{
 		if (*fmt != '%')
@@ -77,14 +71,13 @@ static int		parse(va_list ap, char *fmt)
 		else
 		{
 			fmt++;
-			printlen = print(ap, &fmt, ftab);
+			printlen = print(ap, &fmt);
 			if (printlen == -1)
 				break ;
 			i += printlen;
 		}
 		fmt++;
 	}
-	free(ftab);
 	return (i);
 }
 

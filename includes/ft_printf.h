@@ -6,24 +6,22 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:46:52 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 19:35:27 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <stdint.h>
+# include <stdarg.h>
+# include <stdint.h>
 
-typedef struct 	s_opts
+typedef struct		s_opts
 {
 	int		flags;
 	int		precision;
 	int		min_width;
-}				t_opts;
-
-typedef int 		(*fprint)(va_list, t_opts*);
+}					t_opts;
 
 # define DIESE		1
 # define ZERO		2
@@ -69,22 +67,23 @@ typedef int 		(*fprint)(va_list, t_opts*);
 # define I_C		12
 # define I_BIGC		13
 
-int		parse_opts(va_list ap, char **fmt, t_opts *opts);
-int		ft_formatnbr(intmax_t n, t_opts *opts);
-int		ft_formatunbr(uintmax_t n, t_opts *opts, char *(*convert)(uintmax_t, int *));
-int		printf_str(va_list ap, t_opts *opts);
-int		printf_wstr(va_list ap, t_opts *opts);
-int		printf_hex(va_list ap, t_opts *opts);
-int		printf_nb(va_list ap, t_opts *opts);
-int		printf_oct(va_list ap, t_opts *opts);
-int		printf_char(va_list ap, t_opts *opts);
-int		printf_wchar(va_list ap, t_opts *opts);
-int		printf_noconv(char c, t_opts *opts);
-char	*utoa_base(uintmax_t n, int *nbdig, int base);
-int		printf_spaces(int min_width, int len, int opts);
-int		read_converter(char c, t_opts *opts, char *conv);
-int		read_flags(char c, t_opts *opts);
-int		read_min_width(va_list ap, char *fmt, t_opts *opts);
-int		read_modifiers(char *fmt, t_opts *opts);
-int		read_precision(va_list ap, char *fmt, t_opts *opts);
+int					parse_opts(va_list ap, char **fmt, t_opts *opts);
+int					ft_formatnbr(intmax_t n, t_opts *opts);
+int					ft_formatunbr(uintmax_t n, t_opts *opts,
+	char *(*convert)(uintmax_t, int *));
+int					printf_str(va_list ap, t_opts *opts);
+int					printf_wstr(va_list ap, t_opts *opts);
+int					printf_hex(va_list ap, t_opts *opts);
+int					printf_nb(va_list ap, t_opts *opts);
+int					printf_oct(va_list ap, t_opts *opts);
+int					printf_char(va_list ap, t_opts *opts);
+int					printf_wchar(va_list ap, t_opts *opts);
+int					printf_noconv(char c, t_opts *opts);
+char				*utoa_base(uintmax_t n, int *nbdig, int base);
+int					printf_spaces(int min_width, int len, int opts);
+int					read_converter(char c, t_opts *opts, char *conv);
+int					read_flags(char c, t_opts *opts);
+int					read_min_width(va_list ap, char *fmt, t_opts *opts);
+int					read_modifiers(char *fmt, t_opts *opts);
+int					read_precision(va_list ap, char *fmt, t_opts *opts);
 #endif

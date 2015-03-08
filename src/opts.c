@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:50:45 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 19:22:33 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	reads(va_list ap, char **fmt, t_opts *opts)
 		(*fmt) += fwd;
 	return (*fmt > init);
 }
-
 
 int			parse_opts(va_list ap, char **fmt, t_opts *opts)
 {

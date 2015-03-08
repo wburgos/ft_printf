@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 20:02:20 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 22:52:26 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 19:11:37 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		printf_char(va_list ap, t_opts *opts)
 {
 	int		len;
- 	char	c;
+	char	c;
 
 	if (opts->flags & L)
 		return (printf_wchar(ap, opts));
