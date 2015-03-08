@@ -34,7 +34,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "Compiling printf ..."
-	@gcc -c $(SRC) $(INC)
+	@gcc -c $(FLAGS) $(SRC) $(INC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 	@echo "Done"
