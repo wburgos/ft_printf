@@ -6,11 +6,10 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 20:03:51 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:18:39 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
