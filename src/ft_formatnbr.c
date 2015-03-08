@@ -80,7 +80,8 @@ int			ft_formatnbr(intmax_t n, t_opts *opts)
 	len = 0;
 	sign = has_sign(n, opts->flags);
 	if (!(opts->flags & PRECISION) || opts->precision != 0 || n != 0)
-		len = ft_nbdigits(n) + sign;
+		len = ft_nbdigits(n);
+	len += sign;
 	nbzero = get_nbzero(opts, &len, (n < 0 || sign));
 	nbspaces = get_nbspaces(opts->flags, opts->min_width, &len);
 	if (!(opts->flags & MINUS))
