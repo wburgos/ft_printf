@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/22 16:22:32 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 19:43:34 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:09:16 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int		call_func(va_list ap, t_opts *opts, int i, char noconv)
 		return (printf_char(ap, opts));
 	else if (i == I_BIGC)
 		return (printf_wchar(ap, opts));
+	else if (i == I_B)
+		return (printf_bin(ap, opts));
 	return (0);
 }
 

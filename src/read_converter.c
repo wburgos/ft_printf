@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 18:29:46 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 18:29:47 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:04:18 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	*init_corres(void)
 	corres[I_BIGX] = BIG_X;
 	corres[I_C] = C;
 	corres[I_BIGC] = BIG_C;
+	corres[I_B] = B;
 	return (corres);
 }
 

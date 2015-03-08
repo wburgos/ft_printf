@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 17:07:15 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 19:35:27 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:06:23 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef struct		s_opts
 # define Z			16777216
 # define MIN_WIDTH	33554432
 # define PRECISION	67108864
+# define B			134217728
 
-# define C_SIZE		14
+# define C_SIZE		15
 # define I_S		0
 # define I_BIGS		1
 # define I_P		2
@@ -66,6 +67,7 @@ typedef struct		s_opts
 # define I_BIGX		11
 # define I_C		12
 # define I_BIGC		13
+# define I_B		14
 
 int					parse_opts(va_list ap, char **fmt, t_opts *opts);
 int					ft_formatnbr(intmax_t n, t_opts *opts);
@@ -78,6 +80,7 @@ int					printf_nb(va_list ap, t_opts *opts);
 int					printf_oct(va_list ap, t_opts *opts);
 int					printf_char(va_list ap, t_opts *opts);
 int					printf_wchar(va_list ap, t_opts *opts);
+int					printf_bin(va_list ap, t_opts *opts);
 int					printf_noconv(char c, t_opts *opts);
 char				*utoa_base(uintmax_t n, int *nbdig, int base);
 int					printf_spaces(int min_width, int len, int opts);

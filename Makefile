@@ -22,7 +22,7 @@ FILES = ft_printf.c opts.c ft_inarray.c ft_memalloc.c ft_putchar.c ft_strnew.c \
 		ft_strdup.c ft_strlen.c ft_strncpy.c ft_strsub.c ft_strtolower.c \
 		ft_wcsdup.c ft_wclen.c printf_spaces.c ft_wcslen.c ft_strcpy.c \
 		ft_wcscpy.c ft_wcsncpy.c ft_wcsnew.c ft_wcutf8.c utoa_base.c \
-		ft_strrev.c
+		ft_strrev.c printf_bin.c
 OBJ = $(FILES:.c=.o)
 SRC = $(addprefix $(SDIR), $(FILES))
 INC = -Iincludes/

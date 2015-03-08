@@ -6,7 +6,7 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/26 12:23:16 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 19:22:33 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:03:51 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	*init_conv(void)
 	conv[I_BIGX] = 'X';
 	conv[I_C] = 'c';
 	conv[I_BIGC] = 'C';
+	conv[I_B] = 'b';
 	return (conv);
 }
 
