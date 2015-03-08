@@ -6,16 +6,18 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 21:34:46 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 20:18:44 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:45:06 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
 
 int		read_precision(va_list ap, char *fmt, t_opts *opts)
 {
 	int		i;
+	char	*nb;
 
 	i = 0;
 	if (fmt[i] != '.')
@@ -30,7 +32,9 @@ int		read_precision(va_list ap, char *fmt, t_opts *opts)
 	{
 		while (ft_isdigit(fmt[i]))
 			i++;
-		opts->precision = (i == 1) ? 0 : ft_atoi(ft_strsub(fmt, 1, i));
+		nb = ft_strsub(fmt, 1, i);
+		opts->precision = (i == 1) ? 0 : ft_atoi(nb);
+		free(nb);
 	}
 	return (i);
 }

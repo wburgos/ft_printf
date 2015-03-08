@@ -6,16 +6,18 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 21:33:56 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/07 21:33:58 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:44:23 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
 
 int		read_min_width(va_list ap, char *fmt, t_opts *opts)
 {
 	int		i;
+	char	*nb;
 
 	i = 0;
 	if (fmt[i] == '*')
@@ -32,8 +34,9 @@ int		read_min_width(va_list ap, char *fmt, t_opts *opts)
 	{
 		while (ft_isdigit(fmt[i]))
 			i++;
-		if (i > 0)
-			opts->min_width = ft_atoi(ft_strsub(fmt, 0, i));
+		nb = ft_strsub(fmt, 0, i);
+		opts->min_width = ft_atoi(nb);
+		free(nb);
 	}
 	return (i);
 }
