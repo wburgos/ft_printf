@@ -69,7 +69,7 @@ typedef int 		(*fprint)(va_list, t_opts*);
 # define I_C		12
 # define I_BIGC		13
 
-void	parse_opts(char **fmt, t_opts *opts, int *conv_i);
+int		parse_opts(char **fmt, t_opts *opts);
 int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
 int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
 	char *(*convert)(uintmax_t, int *));

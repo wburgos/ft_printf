@@ -60,22 +60,25 @@ static int	reads(char **fmt, t_opts *opts)
 }
 
 
-void		parse_opts(char **fmt, t_opts *opts, int *conv_i)
+int			parse_opts(char **fmt, t_opts *opts)
 {
+	int		conv_i;
 	int		is_valid;
 	char	*conv;
 
 	opts->flags = 0;
 	conv = init_conv();
+	conv_i = -1;
 	while (**fmt)
 	{
 		is_valid = reads(fmt, opts);
 		if (ft_inarray(**fmt, conv) != -1)
 		{
-			*conv_i = read_converter(**fmt, opts, conv);
+			conv_i = read_converter(**fmt, opts, conv);
 			break ;
 		}
 		if (!is_valid)
 			break ;
 	}
+	return (conv_i);
 }

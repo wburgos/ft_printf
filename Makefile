@@ -37,7 +37,7 @@ $(NAME):
 	@gcc -c $(FLAGS) $(SRC) $(INC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "Done"
+	@echo "$(NAME) generated."
 
 clean:
 	@/bin/rm -f $(OBJ)

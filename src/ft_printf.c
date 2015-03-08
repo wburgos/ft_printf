@@ -37,23 +37,38 @@ static fprint	*init_ftab()
 	return (ftab);
 }
 
-int		ft_printf(char *fmt, ...)
+static int		parse(va_list ap, char **fmt, fprint *ftab)
 {
-	int		i;
-	va_list	ap;
-	t_opts	opts;
 	int		conv_i;
-	fprint	*ftab;
+	t_opts	opts;
+	int		i;
 
-	va_start(ap, fmt);
-	ftab = init_ftab();
 	i = 0;
 	opts.flags = 0;
 	opts.min_width = 0;
 	opts.precision = 0;
+	if (!**fmt)
+		return (-1);
+	conv_i = parse_opts(fmt, &opts);
+	if (!**fmt)
+		return (-1);
+	if (conv_i == -1)
+		i += printf_noconv(**fmt, &opts);
+	else
+		i += ftab[conv_i](ap, &opts); 
+	return (i);
+}
+
+static int		print(va_list ap, char *fmt)
+{
+	int		i;
+	fprint	*ftab;
+	int		parse_len;
+
+	i = 0;
+	ftab = init_ftab();
 	while (*fmt)
 	{
-		conv_i = -1;
 		if (*fmt != '%')
 		{
 			ft_putchar(*fmt);
@@ -62,18 +77,24 @@ int		ft_printf(char *fmt, ...)
 		else
 		{
 			fmt++;
-			if (!*fmt)
+			parse_len = parse(ap, &fmt, ftab);
+			if (parse_len == -1)
 				break ;
-			parse_opts(&fmt, &opts, &conv_i);
-			if (!*fmt)
-				break ;
-			if (conv_i == -1)
-				i += printf_noconv(*fmt, &opts);
-			else if (conv_i != -1)
-				i += ftab[conv_i](ap, &opts);
+			i += parse_len;
 		}
 		fmt++;
 	}
 	free(ftab);
 	return (i);
+}
+
+int				ft_printf(char *fmt, ...)
+{
+	va_list	ap;
+	int		len;
+
+	va_start(ap, fmt);
+	len = print(ap, fmt);
+	va_end(ap);
+	return (len);
 }
