@@ -19,7 +19,7 @@ int		printf_char(va_list ap, t_opts *opts)
  	char	c;
 
 	if (opts->flags & L)
-		return (printf_wchar(ap, opts->flags, opts->min_width, opts->precision));
+		return (printf_wchar(ap, opts));
 	c = va_arg(ap, int);
 	len = sizeof(char);
 	if (!(opts->flags & MINUS))

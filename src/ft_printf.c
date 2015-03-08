@@ -64,14 +64,13 @@ int		ft_printf(char *fmt, ...)
 			fmt++;
 			if (!*fmt)
 				break ;
-			opts = parse_opts(&fmt, &(opts.min_width), &(opts.precision),
-				&conv_i);
+			parse_opts(&fmt, &opts, &conv_i);
 			if (!*fmt)
 				break ;
 			if (conv_i == -1)
-				i += printf_noconv(*fmt, opts);
+				i += printf_noconv(*fmt, &opts);
 			else if (conv_i != -1)
-				i += ftab[conv_i](ap, opts);
+				i += ftab[conv_i](ap, &opts);
 		}
 		fmt++;
 	}

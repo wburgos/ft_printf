@@ -18,27 +18,29 @@ static char	*conv_octal(uintmax_t n, int *nbdig)
 	return (utoa_base(n, nbdig, 8));
 }
 
-int			printf_oct(va_list ap, t_opts opts)
+int			printf_oct(va_list ap, t_opts *opts)
 {
 	int		len;
-	t_opts	opts;
+	int		flags;
+	int		min_width;
+	int		precision;
 
-	opts.flags = opts;
-	opts.min_width = min_width;
-	opts.precision = precision;
-	if (opts & J)
-		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, min_width, precision, &conv_octal);
-	else if (opts & Z)
-		len = ft_formatunbr(va_arg(ap, size_t), opts, min_width, precision, &conv_octal);
-	else if (opts & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, min_width, precision, &conv_octal);
-	else if (opts & L || opts & BIG_O)
-		len = ft_formatunbr(va_arg(ap, unsigned long), opts, min_width, precision, &conv_octal);
-	else if (opts & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
-	else if (opts & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
+	flags = opts->flags;
+	min_width = opts->min_width;
+	precision = opts->precision;
+	if (flags & J)
+		len = ft_formatunbr(va_arg(ap, uintmax_t), flags, min_width, precision, &conv_octal);
+	else if (flags & Z)
+		len = ft_formatunbr(va_arg(ap, size_t), flags, min_width, precision, &conv_octal);
+	else if (flags & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), flags, min_width, precision, &conv_octal);
+	else if (flags & L || flags & BIG_O)
+		len = ft_formatunbr(va_arg(ap, unsigned long), flags, min_width, precision, &conv_octal);
+	else if (flags & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
+	else if (flags & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
 	else
-		len = ft_formatunbr(va_arg(ap, unsigned int), opts, min_width, precision, &conv_octal);
+		len = ft_formatunbr(va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
 	return (len);
 }

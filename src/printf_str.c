@@ -13,29 +13,29 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-int		printf_str(va_list ap, t_opts opts)
+int		printf_str(va_list ap, t_opts *opts)
 {
 	int		len;
 	char	*str;
 	char	*cpy;
 
-	if (opts & L)
-		return (printf_wstr(ap, opts, min_width, precision));
+	if (opts->flags & L)
+		return (printf_wstr(ap, opts));
 	str = va_arg(ap, char *);
 	if (!str)
 		str = ft_strdup("(null)");
-	if (opts & PRECISION)
+	if (opts->flags & PRECISION)
 	{
-		cpy = ft_strnew(precision);
+		cpy = ft_strnew(opts->precision);
 		if (str)
-			cpy = ft_strncpy(cpy, str, precision);
+			cpy = ft_strncpy(cpy, str, opts->precision);
 		str = cpy;
 	}
 	len = ft_strlen(str);
-	if (!(opts & MINUS))
-		len = printf_spaces(min_width, len, opts);
+	if (!(opts->flags & MINUS))
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	ft_putstr(str);
-	if (opts & MINUS)
-		len = printf_spaces(min_width, len, opts);
+	if (opts->flags & MINUS)
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	return (len);
 }

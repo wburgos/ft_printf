@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 
-int		read_min_width(char *fmt, int *min_width)
+int		read_min_width(char *fmt, t_opts *opts)
 {
 	int		i;
 
@@ -20,6 +21,6 @@ int		read_min_width(char *fmt, int *min_width)
 	while (ft_isdigit(fmt[i]))
 		i++;
 	if (i > 0)
-		*min_width = ft_atoi(ft_strsub(fmt, 0, i));
+		opts->min_width = ft_atoi(ft_strsub(fmt, 0, i));
 	return (i);
 }

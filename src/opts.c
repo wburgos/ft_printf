@@ -35,7 +35,7 @@ static char	*init_conv(void)
 	return (conv);
 }
 
-static int	reads(char **fmt, int *opts, int *min_width, int *precision)
+static int	reads(char **fmt, t_opts *opts)
 {
 	char	*init;
 	int		fwd;
@@ -44,14 +44,14 @@ static int	reads(char **fmt, int *opts, int *min_width, int *precision)
 	fwd = 0;
 	while (read_flags(**fmt, opts))
 		(*fmt)++;
-	while ((fwd = read_min_width(*fmt, min_width)))
+	while ((fwd = read_min_width(*fmt, opts)))
 	{
-		*opts |= MIN_WIDTH;
+		opts->flags |= MIN_WIDTH;
 		(*fmt) += fwd;
 	}
-	while ((fwd = read_precision(*fmt, precision)))
+	while ((fwd = read_precision(*fmt, opts)))
 	{
-		*opts |= PRECISION;
+		opts->flags |= PRECISION;
 		(*fmt) += fwd;
 	}
 	while ((fwd = read_modifiers(*fmt, opts)))
@@ -60,24 +60,22 @@ static int	reads(char **fmt, int *opts, int *min_width, int *precision)
 }
 
 
-int			parse_opts(char **fmt, int *min_width, int *precision, int *conv_i)
+void		parse_opts(char **fmt, t_opts *opts, int *conv_i)
 {
-	int		opts;
 	int		is_valid;
 	char	*conv;
 
-	opts = 0;
+	opts->flags = 0;
 	conv = init_conv();
 	while (**fmt)
 	{
-		is_valid = reads(fmt, &opts, min_width, precision);
+		is_valid = reads(fmt, opts);
 		if (ft_inarray(**fmt, conv) != -1)
 		{
-			*conv_i = read_converter(**fmt, &opts, conv);
+			*conv_i = read_converter(**fmt, opts, conv);
 			break ;
 		}
 		if (!is_valid)
 			break ;
 	}
-	return (opts);
 }

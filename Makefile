@@ -26,7 +26,7 @@ FILES = ft_printf.c opts.c ft_inarray.c ft_memalloc.c ft_putchar.c ft_strnew.c \
 OBJ = $(FILES:.c=.o)
 SRC = $(addprefix $(SDIR), $(FILES))
 INC = -Iincludes/
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re
 
@@ -34,7 +34,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "Compiling printf ..."
-	@gcc -c $(FLAGS) $(SRC) $(INC)
+	@gcc -c $(SRC) $(INC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 	@echo "Done"

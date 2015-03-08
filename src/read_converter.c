@@ -35,7 +35,7 @@ static int	*init_corres(void)
 	return (corres);
 }
 
-int			read_converter(char c, int *opts, char *conv)
+int			read_converter(char c, t_opts *opts, char *conv)
 {
 	int		*corres;
 	int		i;
@@ -43,6 +43,6 @@ int			read_converter(char c, int *opts, char *conv)
 	i = -1;
 	corres = init_corres();
 	if (c && ((i = ft_inarray(c, conv)) != -1))
-		*opts |= corres[i];
+		opts->flags |= corres[i];
 	return (i);
 }

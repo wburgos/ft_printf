@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 
-int		read_precision(char *fmt, int *precision)
+int		read_precision(char *fmt, t_opts *opts)
 {
 	int		i;
 
@@ -22,6 +23,6 @@ int		read_precision(char *fmt, int *precision)
 	i++;
 	while (ft_isdigit(fmt[i]))
 		i++;
-	*precision = (i == 1) ? 0 : ft_atoi(ft_strsub(fmt, 1, i));
+	opts->precision = (i == 1) ? 0 : ft_atoi(ft_strsub(fmt, 1, i));
 	return (i);
 }

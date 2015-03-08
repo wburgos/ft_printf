@@ -13,17 +13,17 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-int			printf_wchar(va_list ap, t_opts opts)
+int			printf_wchar(va_list ap, t_opts *opts)
 {
 	int		len;
 	wchar_t	c;
 
 	c = va_arg(ap, wint_t);
 	len = ft_wclen(c);
-	if (!(opts & MINUS))
-		len = printf_spaces(min_width, len, opts);
+	if (!(opts->flags & MINUS))
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	ft_putwchar(c);
-	if (opts & MINUS)
-		len = printf_spaces(min_width, len, opts);
+	if (opts->flags & MINUS)
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	return (len);
 }

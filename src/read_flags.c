@@ -12,18 +12,18 @@
 
 #include "ft_printf.h"
 
-int		read_flags(char c, int *opts)
+int		read_flags(char c, t_opts *opts)
 {
 	if (c == '#')
-		*opts |= DIESE;
+		opts->flags |= DIESE;
 	if (c == '0')
-		*opts |= ZERO;
+		opts->flags |= ZERO;
 	if (c == '-')
-		*opts |= MINUS;
+		opts->flags |= MINUS;
 	if (c == ' ')
-		*opts |= SPACE;
+		opts->flags |= SPACE;
 	if (c == '+')
-		*opts |= PLUS;
+		opts->flags |= PLUS;
 	if (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+')
 		return (1);
 	return (0);

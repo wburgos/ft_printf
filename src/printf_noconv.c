@@ -13,15 +13,15 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-int		printf_noconv(char c, int opts, int min_width, int precision)
+int		printf_noconv(char c, t_opts *opts)
 {
 	int		len;
 
 	len = sizeof(char);
-	if (!(opts & MINUS))
-		len = printf_spaces(min_width, len, opts);
+	if (!(opts->flags & MINUS))
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	ft_putchar(c);
-	if (opts & MINUS)
-		len = printf_spaces(min_width, len, opts);
+	if (opts->flags & MINUS)
+		len = printf_spaces(opts->min_width, len, opts->flags);
 	return (len);
 }

@@ -12,37 +12,37 @@
 
 #include "ft_printf.h"
 
-static int	check_hh(char c, char n, int *opts)
+static int	check_hh(char c, char n, t_opts *opts)
 {
 	if (c == 'h')
 	{
 		if (n == 'h')
 		{
-			*opts |= HH;
+			opts->flags |= HH;
 			return (1);
 		}
 		else
-			*opts |= H;
+			opts->flags |= H;
 	}
 	return (0);
 }
 
-static int	check_ll(char c, char n, int *opts)
+static int	check_ll(char c, char n, t_opts *opts)
 {
 	if (c == 'l')
 	{
 		if (n == 'l')
 		{
-			*opts |= LL;
+			opts->flags |= LL;
 			return (1);
 		}
 		else
-			*opts |= L;
+			opts->flags |= L;
 	}
 	return (0);
 }
 
-int			read_modifiers(char *fmt, int *opts)
+int			read_modifiers(char *fmt, t_opts *opts)
 {
 	int		i;
 
@@ -52,9 +52,9 @@ int			read_modifiers(char *fmt, int *opts)
 		i += check_hh(fmt[i], fmt[i + 1], opts);
 		i += check_ll(fmt[i], fmt[i + 1], opts);
 		if (fmt[i] == 'j')
-			*opts |= J;
+			opts->flags |= J;
 		if (fmt[i] == 'z')
-			*opts |= Z;
+			opts->flags |= Z;
 		i++;
 	}
 	return (i);
