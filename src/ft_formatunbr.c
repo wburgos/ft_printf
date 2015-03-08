@@ -6,10 +6,11 @@
 /*   By: wburgos <wburgos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/07 17:53:49 by wburgos           #+#    #+#             */
-/*   Updated: 2015/03/08 20:18:31 by wburgos          ###   ########.fr       */
+/*   Updated: 2015/03/08 20:38:49 by wburgos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 #include "ft_printf.h"
 
@@ -104,6 +105,7 @@ int			ft_formatunbr(uintmax_t n, t_opts *opts,
 	ft_putnchar('0', nbzero);
 	if (!(opts->flags & PRECISION && opts->precision == 0 && n == 0))
 		ft_putstr(converted);
+	free(converted);
 	if (opts->flags & MINUS)
 		ft_putnchar(' ', nbspaces);
 	return (len);
