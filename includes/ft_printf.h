@@ -69,7 +69,7 @@ typedef int 		(*fprint)(va_list, t_opts*);
 # define I_C		12
 # define I_BIGC		13
 
-int		parse_opts(char **fmt, t_opts *opts);
+int		parse_opts(va_list ap, char **fmt, t_opts *opts);
 int		ft_formatnbr(intmax_t n, t_opts *opts);
 int		ft_formatunbr(uintmax_t n, t_opts *opts, char *(*convert)(uintmax_t, int *));
 int		printf_str(va_list ap, t_opts *opts);
@@ -84,7 +84,7 @@ char	*utoa_base(uintmax_t n, int *nbdig, int base);
 int		printf_spaces(int min_width, int len, int opts);
 int		read_converter(char c, t_opts *opts, char *conv);
 int		read_flags(char c, t_opts *opts);
-int		read_min_width(char *fmt, t_opts *opts);
+int		read_min_width(va_list ap, char *fmt, t_opts *opts);
 int		read_modifiers(char *fmt, t_opts *opts);
-int		read_precision(char *fmt, t_opts *opts);
+int		read_precision(va_list ap, char *fmt, t_opts *opts);
 #endif

@@ -46,4 +46,8 @@ wchar_t				*ft_wcsncpy(wchar_t *dst, const wchar_t *src, size_t n);
 int					ft_putwstr(wchar_t *str);
 int					ft_putwchar(wchar_t c);
 int					ft_wcutf8(wchar_t wchar, char *conv_temp);
+char				*ft_strcut(char *str, size_t n);
+char				*ft_itoa(int n);
+char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strcat(char *s1, const char *s2);
 #endif

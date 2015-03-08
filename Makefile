@@ -26,7 +26,7 @@ FILES = ft_printf.c opts.c ft_inarray.c ft_memalloc.c ft_putchar.c ft_strnew.c \
 OBJ = $(FILES:.c=.o)
 SRC = $(addprefix $(SDIR), $(FILES))
 INC = -Iincludes/
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3
 
 .PHONY: all clean fclean re
 

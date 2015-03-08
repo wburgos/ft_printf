@@ -13,14 +13,27 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-int		read_min_width(char *fmt, t_opts *opts)
+int		read_min_width(va_list ap, char *fmt, t_opts *opts)
 {
 	int		i;
 
 	i = 0;
-	while (ft_isdigit(fmt[i]))
+	if (fmt[i] == '*')
+	{
+		opts->min_width = va_arg(ap, int);
+		if (opts->min_width < 0)
+		{
+			opts->min_width *= -1;
+			opts->flags |= MINUS;
+		}
 		i++;
-	if (i > 0)
-		opts->min_width = ft_atoi(ft_strsub(fmt, 0, i));
+	}
+	else
+	{
+		while (ft_isdigit(fmt[i]))
+			i++;
+		if (i > 0)
+			opts->min_width = ft_atoi(ft_strsub(fmt, 0, i));
+	}
 	return (i);
 }

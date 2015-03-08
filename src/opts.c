@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
@@ -36,7 +37,7 @@ static char	*init_conv(void)
 	return (conv);
 }
 
-static int	reads(char **fmt, t_opts *opts)
+static int	reads(va_list ap, char **fmt, t_opts *opts)
 {
 	char	*init;
 	int		fwd;
@@ -45,14 +46,15 @@ static int	reads(char **fmt, t_opts *opts)
 	fwd = 0;
 	while (read_flags(**fmt, opts))
 		(*fmt)++;
-	while ((fwd = read_min_width(*fmt, opts)))
+	while ((fwd = read_min_width(ap, *fmt, opts)))
 	{
 		opts->flags |= MIN_WIDTH;
 		(*fmt) += fwd;
 	}
-	while ((fwd = read_precision(*fmt, opts)))
+	while ((fwd = read_precision(ap, *fmt, opts)))
 	{
-		opts->flags |= PRECISION;
+		if (opts->precision >= 0)
+			opts->flags |= PRECISION;
 		(*fmt) += fwd;
 	}
 	while ((fwd = read_modifiers(*fmt, opts)))
@@ -61,7 +63,7 @@ static int	reads(char **fmt, t_opts *opts)
 }
 
 
-int			parse_opts(char **fmt, t_opts *opts)
+int			parse_opts(va_list ap, char **fmt, t_opts *opts)
 {
 	int		conv_i;
 	int		is_valid;
@@ -72,7 +74,7 @@ int			parse_opts(char **fmt, t_opts *opts)
 	conv_i = -1;
 	while (**fmt)
 	{
-		is_valid = reads(fmt, opts);
+		is_valid = reads(ap, fmt, opts);
 		if (ft_inarray(**fmt, conv) != -1)
 		{
 			conv_i = read_converter(**fmt, opts, conv);

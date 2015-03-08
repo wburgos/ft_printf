@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "ft_printf.h"
 #include "libft.h"
 
-int		read_precision(char *fmt, t_opts *opts)
+int		read_precision(va_list ap, char *fmt, t_opts *opts)
 {
 	int		i;
 
@@ -21,8 +22,16 @@ int		read_precision(char *fmt, t_opts *opts)
 	if (fmt[i] != '.')
 		return (0);
 	i++;
-	while (ft_isdigit(fmt[i]))
+	if (fmt[i] == '*')
+	{
+		opts->precision = va_arg(ap, int);
 		i++;
-	opts->precision = (i == 1) ? 0 : ft_atoi(ft_strsub(fmt, 1, i));
+	}
+	else
+	{
+		while (ft_isdigit(fmt[i]))
+			i++;
+		opts->precision = (i == 1) ? 0 : ft_atoi(ft_strsub(fmt, 1, i));
+	}
 	return (i);
 }

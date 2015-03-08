@@ -27,8 +27,7 @@ int		printf_str(va_list ap, t_opts *opts)
 	if (opts->flags & PRECISION)
 	{
 		cpy = ft_strnew(opts->precision);
-		if (str)
-			cpy = ft_strncpy(cpy, str, opts->precision);
+		cpy = ft_strncpy(cpy, str, opts->precision);
 		str = cpy;
 	}
 	len = ft_strlen(str);

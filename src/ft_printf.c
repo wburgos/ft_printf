@@ -37,7 +37,7 @@ static fprint	*init_ftab()
 	return (ftab);
 }
 
-static int		parse(va_list ap, char **fmt, fprint *ftab)
+static int		print(va_list ap, char **fmt, fprint *ftab)
 {
 	int		conv_i;
 	t_opts	opts;
@@ -49,21 +49,21 @@ static int		parse(va_list ap, char **fmt, fprint *ftab)
 	opts.precision = 0;
 	if (!**fmt)
 		return (-1);
-	conv_i = parse_opts(fmt, &opts);
+	conv_i = parse_opts(ap, fmt, &opts);
 	if (!**fmt)
 		return (-1);
 	if (conv_i == -1)
 		i += printf_noconv(**fmt, &opts);
 	else
-		i += ftab[conv_i](ap, &opts); 
+		i += ftab[conv_i](ap, &opts);
 	return (i);
 }
 
-static int		print(va_list ap, char *fmt)
+static int		parse(va_list ap, char *fmt)
 {
 	int		i;
 	fprint	*ftab;
-	int		parse_len;
+	int		printlen;
 
 	i = 0;
 	ftab = init_ftab();
@@ -77,10 +77,10 @@ static int		print(va_list ap, char *fmt)
 		else
 		{
 			fmt++;
-			parse_len = parse(ap, &fmt, ftab);
-			if (parse_len == -1)
+			printlen = print(ap, &fmt, ftab);
+			if (printlen == -1)
 				break ;
-			i += parse_len;
+			i += printlen;
 		}
 		fmt++;
 	}
@@ -94,7 +94,7 @@ int				ft_printf(char *fmt, ...)
 	int		len;
 
 	va_start(ap, fmt);
-	len = print(ap, fmt);
+	len = parse(ap, fmt);
 	va_end(ap);
 	return (len);
 }
