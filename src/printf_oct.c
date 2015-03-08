@@ -21,26 +21,22 @@ static char	*conv_octal(uintmax_t n, int *nbdig)
 int			printf_oct(va_list ap, t_opts *opts)
 {
 	int		len;
-	int		flags;
-	int		min_width;
-	int		precision;
 
-	flags = opts->flags;
-	min_width = opts->min_width;
-	precision = opts->precision;
-	if (flags & J)
-		len = ft_formatunbr(va_arg(ap, uintmax_t), flags, min_width, precision, &conv_octal);
-	else if (flags & Z)
-		len = ft_formatunbr(va_arg(ap, size_t), flags, min_width, precision, &conv_octal);
-	else if (flags & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), flags, min_width, precision, &conv_octal);
-	else if (flags & L || flags & BIG_O)
-		len = ft_formatunbr(va_arg(ap, unsigned long), flags, min_width, precision, &conv_octal);
-	else if (flags & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
-	else if (flags & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
+	if (opts->flags & J)
+		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, &conv_octal);
+	else if (opts->flags & Z)
+		len = ft_formatunbr(va_arg(ap, size_t), opts, &conv_octal);
+	else if (opts->flags & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, &conv_octal);
+	else if (opts->flags & L || opts->flags & BIG_O)
+		len = ft_formatunbr(va_arg(ap, unsigned long), opts, &conv_octal);
+	else if (opts->flags & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts,
+			&conv_octal);
+	else if (opts->flags & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts,
+			&conv_octal);
 	else
-		len = ft_formatunbr(va_arg(ap, unsigned int), flags, min_width, precision, &conv_octal);
+		len = ft_formatunbr(va_arg(ap, unsigned int), opts, &conv_octal);
 	return (len);
 }

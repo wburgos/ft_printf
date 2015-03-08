@@ -64,29 +64,25 @@ static char	*conv_hex(uintmax_t n, int *nbdig)
 int		printf_hex(va_list ap, t_opts *opts)
 {
 	int		len;
-	int		flags;
-	int		min_width;
-	int		precision;
 
 	len = 0;
-	flags = opts->flags;
-	min_width = opts->min_width;
-	precision = opts->precision;
-	if (flags & P)
-		len = ft_formatunbr((uintmax_t)va_arg(ap, void *), flags, min_width, precision, &conv_hex);
-	else if (flags & J)
-		len = ft_formatunbr(va_arg(ap, uintmax_t), flags, min_width, precision, &conv_hex);
-	else if (flags & Z)
-		len = ft_formatunbr(va_arg(ap, size_t), flags, min_width, precision, &conv_hex);
-	else if (flags & LL)
-		len = ft_formatunbr(va_arg(ap, unsigned long long), flags, min_width, precision, &conv_hex);
-	else if (flags & L)
-		len = ft_formatunbr(va_arg(ap, unsigned long), flags, min_width, precision, &conv_hex);
-	else if (flags & H)
-		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
-	else if (flags & HH)
-		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
+	if (opts->flags & P)
+		len = ft_formatunbr((uintmax_t)va_arg(ap, void *), opts, &conv_hex);
+	else if (opts->flags & J)
+		len = ft_formatunbr(va_arg(ap, uintmax_t), opts, &conv_hex);
+	else if (opts->flags & Z)
+		len = ft_formatunbr(va_arg(ap, size_t), opts, &conv_hex);
+	else if (opts->flags & LL)
+		len = ft_formatunbr(va_arg(ap, unsigned long long), opts, &conv_hex);
+	else if (opts->flags & L)
+		len = ft_formatunbr(va_arg(ap, unsigned long), opts, &conv_hex);
+	else if (opts->flags & H)
+		len = ft_formatunbr((unsigned short)va_arg(ap, unsigned int), opts,
+			&conv_hex);
+	else if (opts->flags & HH)
+		len = ft_formatunbr((unsigned char)va_arg(ap, unsigned int), opts,
+			&conv_hex);
 	else
-		len = ft_formatunbr(va_arg(ap, unsigned int), flags, min_width, precision, &conv_hex);
+		len = ft_formatunbr(va_arg(ap, unsigned int), opts, &conv_hex);
 	return (len);
 }

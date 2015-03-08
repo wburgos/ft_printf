@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
 
@@ -44,5 +45,6 @@ int			read_converter(char c, t_opts *opts, char *conv)
 	corres = init_corres();
 	if (c && ((i = ft_inarray(c, conv)) != -1))
 		opts->flags |= corres[i];
+	free(corres);
 	return (i);
 }

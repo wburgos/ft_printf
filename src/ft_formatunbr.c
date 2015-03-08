@@ -86,7 +86,7 @@ static int put_prefix(uintmax_t n, int opts, int prec)
 	return (len);
 }
 
-int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
+int		ft_formatunbr(uintmax_t n, t_opts *opts,
 	char *(*convert)(uintmax_t, int *))
 {
 	int		len;
@@ -94,24 +94,24 @@ int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
 	char	*res;
 
 	res = convert(n, &len);
-	if (opts & X || opts & P)
+	if (opts->flags & X || opts->flags & P)
 		ft_strtolower(res);
-	if (opts & PRECISION && prec == 0 && n == 0)
+	if (opts->flags & PRECISION && opts->precision == 0 && n == 0)
 		len--;
-	if (octal_alt(n, opts, prec))
+	if (octal_alt(n, opts->flags, opts->precision))
 		len++;
-	else if (hex_alt(n, opts))
+	else if (hex_alt(n, opts->flags))
 		len += 2;
 	tmp = len;
-	if (!(opts & MINUS) && !(opts & ZERO))
-		len += put_spaces(minw, prec, tmp);
-	put_prefix(n, opts, prec);
-	if ((!(opts & MINUS) && opts & ZERO) || opts & PRECISION)
-		len += put_zeroes(minw, prec, tmp, opts, (n != 0));
-	if (!(opts & PRECISION && prec == 0 && n == 0))
+	if (!(opts->flags & MINUS) && !(opts->flags & ZERO))
+		len += put_spaces(opts->min_width, opts->precision, tmp);
+	put_prefix(n, opts->flags, opts->precision);
+	if ((!(opts->flags & MINUS) && opts->flags & ZERO) || opts->flags & PRECISION)
+		len += put_zeroes(opts->min_width, opts->precision, tmp, opts->flags, (n != 0));
+	if (!(opts->flags & PRECISION && opts->precision == 0 && n == 0))
 		ft_putstr(res);
 	free(res);
-	if (opts & MINUS)
-		len += put_spaces(minw, prec, tmp);
+	if (opts->flags & MINUS)
+		len += put_spaces(opts->min_width, opts->precision, tmp);
 	return (len);
 }

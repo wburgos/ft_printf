@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 #include "libft.h"
 
@@ -80,5 +81,6 @@ int			parse_opts(char **fmt, t_opts *opts)
 		if (!is_valid)
 			break ;
 	}
+	free(conv);
 	return (conv_i);
 }

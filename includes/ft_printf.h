@@ -70,9 +70,8 @@ typedef int 		(*fprint)(va_list, t_opts*);
 # define I_BIGC		13
 
 int		parse_opts(char **fmt, t_opts *opts);
-int		ft_formatnbr(intmax_t n, int opts, int minw, int prec);
-int		ft_formatunbr(uintmax_t n, int opts, int minw, int prec,
-	char *(*convert)(uintmax_t, int *));
+int		ft_formatnbr(intmax_t n, t_opts *opts);
+int		ft_formatunbr(uintmax_t n, t_opts *opts, char *(*convert)(uintmax_t, int *));
 int		printf_str(va_list ap, t_opts *opts);
 int		printf_wstr(va_list ap, t_opts *opts);
 int		printf_hex(va_list ap, t_opts *opts);

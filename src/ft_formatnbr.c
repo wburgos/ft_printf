@@ -36,40 +36,60 @@ static int	has_sign(intmax_t n, int opts)
 	return (n >= 0 && (opts & PLUS || opts & SPACE));
 }
 
-int			ft_formatnbr(intmax_t n, int opts, int minw, int prec)
+static int	get_nbzero(t_opts *opts, int *len, int has_sign)
+{
+	int		nbzero;
+
+	nbzero = 0;
+	if (opts->flags & PRECISION && opts->precision > *len - has_sign)
+	{
+		nbzero += opts->precision - *len + has_sign;
+		*len += nbzero;
+	}
+	if (opts->flags & MIN_WIDTH && opts->flags & ZERO && !(opts->flags & MINUS)
+		&& !(opts->flags & PRECISION) && opts->min_width > *len)
+	{
+		nbzero += opts->min_width - *len;
+		*len += nbzero;
+	}
+	return (nbzero);
+}
+
+static int	get_nbspaces(int opts, int minw, int *len)
+{
+	int		nbspaces;
+
+	nbspaces = 0;
+	if (opts & MIN_WIDTH
+		&& (!(opts & ZERO) || opts & MINUS || opts & PRECISION)
+		&& minw > *len)
+	{
+		nbspaces += minw - *len;
+		*len += nbspaces;
+	}
+	return (nbspaces);
+}
+
+int			ft_formatnbr(intmax_t n, t_opts *opts)
 {
 	int		len;
 	int		sign;
 	int		nbzero;
 	int		nbspaces;
 
-	nbzero = 0;
-	nbspaces = 0;
-	sign = has_sign(n, opts);
-	len = (opts & PRECISION && prec == 0 && n == 0) ? 0 : (ft_nbdigits(n) + sign);
-	if (opts & PRECISION && prec > len - (n < 0 || sign))
-	{
-		nbzero += prec - len + (n < 0 || sign);
-		len += nbzero;
-	}
-	if (opts & MIN_WIDTH && opts & ZERO && !(opts & MINUS)
-		&& !(opts & PRECISION) && minw > len)
-	{
-		nbzero += minw - len;
-		len += nbzero;
-	}
-	if (opts & MIN_WIDTH && (!(opts & ZERO) || opts & MINUS || opts & PRECISION) && minw > len)
-	{
-		nbspaces += minw - len;
-		len += nbspaces;
-	}
-	if (!(opts & MINUS))
+	len = 0;
+	sign = has_sign(n, opts->flags);
+	if (!(opts->flags & PRECISION) || opts->precision != 0 || n != 0)
+		len = ft_nbdigits(n) + sign;
+	nbzero = get_nbzero(opts, &len, (n < 0 || sign));
+	nbspaces = get_nbspaces(opts->flags, opts->min_width, &len);
+	if (!(opts->flags & MINUS))
 		ft_putnchar(' ', nbspaces);
-	put_sign(n, opts);
+	put_sign(n, opts->flags);
 	ft_putnchar('0', nbzero);
-	if (!(opts & PRECISION && prec == 0 && n == 0))
+	if (!(opts->flags & PRECISION && opts->precision == 0 && n == 0))
 		ft_putunbr((n < 0) ? (-n) : (n));
-	if (opts & MINUS)
+	if (opts->flags & MINUS)
 		ft_putnchar(' ', nbspaces);
 	return (len);
 }
